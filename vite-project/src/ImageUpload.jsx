@@ -26,15 +26,15 @@ function ImageUpload() {
         data : data
       };
 
-      // axios.request(config)
-      // .then((response) => {
-      //   let imgUrl = response.data.data.link;
-      //   axios.post('/storeImageUrl', { imgUrl });
-      //   console.log(JSON.stringify(response.data));
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
+      axios.request(config)
+      .then((response) => {
+        let imgUrl = response.data.data.link;
+        axios.post('/storeImageUrl', { imgUrl });
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       // Send the imgUrl to your backend to store in the database
       const imgUrl = 'https://imgur.com/jFtIjBX';
       await axios.post('http://localhost:3001/api/storeImageUrl', { imgUrl })
