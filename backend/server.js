@@ -1,35 +1,66 @@
-const express = require('express');
-const multer = require('multer');
-const app = express();
-const port = 3001; // Choose a port
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://andieliu:zKgn4y9aaR@receipts.r95pysw.mongodb.net/?retryWrites=true&w=majority";
 
-// Multer configuration for handling file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Set the destination folder for uploaded files
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname); // Use the original filename for the uploaded file
-  },
-});
-
-const upload = multer({ storage });
-
-// Serve static files from the 'uploads' folder
-app.use('/uploads', express.static('uploads'));
-
-// Handle POST request for image upload
-app.post('/upload', upload.single('image'), (req, res) => {
-  try {
-    console.log(req); // Log information about the uploaded file
-
-    // The uploaded file can be accessed through req.file
-    const { filename, path } = req.file;
-    res.json({ filename, path });
-  } catch (error) {
-    res.status(500).send(error.message);
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
   }
 });
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
+
+
+const express = require('express');
+const cors = require('cors');
+const Image = require('./models/Image'); // Import the Mongoose model
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const port = 3001; // Choose a port
+
+// Handle GET request for image upload  
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+// Handle POST request for image upload
+app.post('/api/storeImageUrl', async (req, res) => {
+  try {
+    const { imgUrl } = req.body;
+
+    // Create a new instance of the Image model
+    const image = new Image({ imgUrl });
+    console.log(image);
+    // Save the image to the database
+    await image.save();
+
+    console.log('Image URL saved to the database:', imgUrl);
+
+    res.status(201).json({ message: 'Image URL saved successfully' });
+  } catch (error) {
+    console.error('Error handling image upload:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
