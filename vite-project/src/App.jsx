@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import ImageUpload from './ImageUpload';
+import ImageUpload from './components/ImageUpload';
 
 function App() {
   const [count, setCount] = useState(0)
