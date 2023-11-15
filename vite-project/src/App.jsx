@@ -10,7 +10,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
+          <Route path="/" element={<DashboardPage numberOfCards={5}/>} />
           <Route path="/profiles" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
