@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import './navBar.css';
+import UploadPage from './UploadPage';
+
 
 const NavBarComponent = () => {
 
@@ -30,6 +32,7 @@ const NavBarComponent = () => {
                             </Modal.Header>
                             <Modal.Body>
                                 **upload receipt button here**
+                                <UploadPage />
                             </Modal.Body>
                             <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>

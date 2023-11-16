@@ -40,14 +40,14 @@ function ImageUpload() {
         });
         
       // Send the imgUrl to Veryfi API
-      let imgUrl = 'https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg';
-      axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl })
-          .catch((err) => {
-            console.log("API error ↓");
-            console.log(err);
-            if (err.response.data.error) {
-              console.log(err.response.data.error);
-        }});
+      // let imgUrl = 'https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg';
+      // axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl })
+      //     .catch((err) => {
+      //       console.log("API error ↓");
+      //       console.log(err);
+      //       if (err.response.data.error) {
+      //         console.log(err.response.data.error);
+      //   }});
     } else {
       console.log('No image selected');
     }
