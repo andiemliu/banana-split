@@ -116,6 +116,7 @@ app.post('/api/itemizeReceipt', async (req, res) => {
 
 app.get('/api/getReceipt/:id', async (req, res) => {
   try {
+<<<<<<< HEAD
     // Connect the client to the server
     await client.connect();
     // Specify a database to access
@@ -137,6 +138,15 @@ app.get('/api/getReceipt/:id', async (req, res) => {
     }
 
     res.json({ data: document });
+=======
+    const retrievedDocument = await Receipt.findById(req.params.id);
+
+    if (!retrievedDocument) {
+      return res.status(404).json({ error: 'Receipt not found' });
+    }
+
+    res.json({ data: retrievedDocument });
+>>>>>>> 48a42e3 (add getReceipt API endpoint to retrieve documents from DB by ID)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
