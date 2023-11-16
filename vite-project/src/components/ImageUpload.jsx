@@ -20,16 +20,21 @@ function ImageUpload() {
   
       await axios.post(`https://api.imgbb.com/1/upload?key=${imgbbToken}`,
         data, { headers: { "Content-Type": "multipart/form-data",},})
-        .then((response) => {
+        .then(async (response) => {
           // Send the imgUrl to backend to store in the database
           let imgUrl = response.data.data.url;
-          axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl })
-          .catch((err) => {
-            console.log("API error ↓");
-            console.log(err);
-            if (err.response.data.error) {
-              console.log(err.response.data.error);
-        }});
+          const backendResponse = axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl });
+          if (!response.ok) {
+            throw new Error(`Error saving itemized receipt to DB! Status: ${response.status}`);
+          }
+      
+          // Parse the JSON response
+          const responseData = await response.json();
+      
+          // Access the stored ID
+          const storedId = responseData.insertedId;
+      
+          console.log('Data stored successfully with ID:', storedId);
         // Send API request to store imgUrl to MongoDB
         //   axios.post('http://localhost:3001/api/storeImageUrl', { imgUrl })})
         //   .catch((err) => {

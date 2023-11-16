@@ -17,7 +17,7 @@ const client = new MongoClient(uri, {
 const axios = require("axios");
 const express = require('express');
 const cors = require('cors');
-const Image = require('./models/Image'); // Import the Mongoose model
+const Receipt = require('./models/Receipt'); // Import the Mongoose model
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -62,6 +62,7 @@ app.post('/api/itemizeReceipt', async (req, res) => {
   try {
     const { imgUrl } = req.body;
 
+    // UNCOMMENT THESE LINES AND THE FIRST LINE IN THE TRY BLOCK TO ACTUALLY GET THE DATA 
     const options = {
       method: 'POST',
       url: 'https://api.veryfi.com/api/v8/partner/documents',
@@ -77,10 +78,33 @@ app.post('/api/itemizeReceipt', async (req, res) => {
     };
 
     try {
-      const { data } = await axios.request(options);
-      console.log('Receipt itemized:', data);
-      res.status(201).json({ message: 'Receipt itemized successfully' });
+    const { data } = await axios.request(options);
+     
+      try {
+        // Connect the client to the server
+        await client.connect();
+        // Specify a database to access
+        const db = client.db(dbName);
+        // Reference a particular collection
+        const col = db.collection('images');
+    
+        // Create a new instance of the Receipt model
+        const receipt = new Receipt({ imgUrl, data });
+        console.log(receipt);
+    
+        // Save the image to the database
+        const result = await col.insertOne(receipt);
+        console.log(result);
+        const insertedId = result.insertedId; // Store the ID for future use
+        console.log('Receipt saved to the database. ID:', insertedId);
+    
+        // Return the insertedId in the response
+        res.status(201).json({ message: 'Data stored successfully', insertedId });
       } catch (error) {
+        console.error('Error handling receipt upload:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    } catch (error) {
       console.error(error);
     }
 
