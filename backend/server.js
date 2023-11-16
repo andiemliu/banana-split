@@ -1,6 +1,6 @@
 const process = require('process');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.VITE_REACT_APP_DB_CONNECTION_STRING;
 const veryfiClientID = process.env.VITE_REACT_APP_VERYFI_CLIENT_ID;
 const veryfiAuth = process.env.VITE_REACT_APP_VERYFI_AUTHORIZATION;
@@ -116,13 +116,27 @@ app.post('/api/itemizeReceipt', async (req, res) => {
 
 app.get('/api/getReceipt/:id', async (req, res) => {
   try {
-    const retrievedDocument = await Receipt.findById(req.params.id);
+    // Connect the client to the server
+    await client.connect();
+    // Specify a database to access
+    const db = client.db(dbName);
+    // Reference a particular collection
+    const col = db.collection('images');
+    
+    const id = req.params.id;
 
-    if (!retrievedDocument) {
+    // Use ObjectId to create a valid MongoDB ObjectId from the provided string ID
+    const objectId = new ObjectId(id);
+
+    // Find the document by ID
+    const document = await col.findOne({ _id: objectId });
+
+    console.log(document);
+    if (!document) {
       return res.status(404).json({ error: 'Receipt not found' });
     }
 
-    res.json({ data: retrievedDocument });
+    res.json({ data: document });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
