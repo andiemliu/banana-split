@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './pages/dashboardPage';
 import ProfilePage from './pages/profilesPage';
 
+import { useState } from 'react'
+import UploadPage from './components/UploadPage';
+import ReceiptPreprocessPage from './components/ReceiptPreprocessPage';
 
 function App() {
 
