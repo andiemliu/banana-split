@@ -1,6 +1,6 @@
 const process = require('process');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.VITE_REACT_APP_DB_CONNECTION_STRING;
 const veryfiClientID = process.env.VITE_REACT_APP_VERYFI_CLIENT_ID;
 const veryfiAuth = process.env.VITE_REACT_APP_VERYFI_AUTHORIZATION;
@@ -17,7 +17,7 @@ const client = new MongoClient(uri, {
 const axios = require("axios");
 const express = require('express');
 const cors = require('cors');
-const Image = require('./models/Image'); // Import the Mongoose model
+const Receipt = require('./models/Receipt'); // Import the Mongoose model
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -62,30 +62,89 @@ app.post('/api/itemizeReceipt', async (req, res) => {
   try {
     const { imgUrl } = req.body;
 
-    const options = {
-      method: 'POST',
-      url: 'https://api.veryfi.com/api/v8/partner/documents',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'CLIENT-ID': veryfiClientID,
-        AUTHORIZATION: veryfiAuth
-      },
-      data: {
-        file_url: imgUrl
-      }
-    };
+    // UNCOMMENT THESE LINES AND THE FIRST LINE IN THE TRY BLOCK TO ACTUALLY GET THE DATA 
+    // const options = {
+    //   method: 'POST',
+    //   url: 'https://api.veryfi.com/api/v8/partner/documents',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json',
+    //     'CLIENT-ID': veryfiClientID,
+    //     AUTHORIZATION: veryfiAuth
+    //   },
+    //   data: {
+    //     file_url: imgUrl
+    //   }
+    // };
 
     try {
-      const { data } = await axios.request(options);
-      console.log('Receipt itemized:', data);
-      res.status(201).json({ message: 'Receipt itemized successfully' });
+    // const { data } = await axios.request(options);
+     
+      try {
+        // // Connect the client to the server
+        // await client.connect();
+        // // Specify a database to access
+        // const db = client.db(dbName);
+        // // Reference a particular collection
+        // const col = db.collection('images');
+    
+        // // Create a new instance of the Receipt model
+        // const receipt = new Receipt({ imgUrl, data });
+        // console.log(receipt);
+    
+        // // Save the image to the database
+        // const result = await col.insertOne(receipt);
+        // console.log(result);
+        // const insertedId = result.insertedId; // Store the ID for future use
+        // console.log('Receipt saved to the database. ID:', insertedId);
+    
+        //Uncomment this line to actually save the data to the database
+        const insertedId = '6552d6a48317ff1e724bdd90';
+        // Return the insertedId in the response
+        res.status(201).json({ message: 'Data stored successfully', insertedId });
       } catch (error) {
+        console.error('Error handling receipt upload:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    } catch (error) {
       console.error(error);
     }
 
   } catch (error) {
     console.error('Error handling receipt itemizer:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/getReceipt/:id', async (req, res) => {
+  console.log("getReceipt");
+  try {
+    console.log('Try to connect to server');
+
+    // Connect the client to the server
+    await client.connect();
+    console.log('Connected successfully to server');
+    // Specify a database to access
+    const db = client.db(dbName);
+    // Reference a particular collection
+    const col = db.collection('images');
+    
+    const id = req.params.id;
+
+    // Use ObjectId to create a valid MongoDB ObjectId from the provided string ID
+    const objectId = new ObjectId(id);
+
+    // Find the document by ID
+    const document = await col.findOne({ _id: objectId });
+
+    console.log(document);
+    if (!document) {
+      return res.status(404).json({ error: 'Receipt not found' });
+    }
+
+    res.json({ data: document });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

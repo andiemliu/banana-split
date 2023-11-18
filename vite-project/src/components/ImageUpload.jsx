@@ -20,16 +20,19 @@ function ImageUpload() {
   
       await axios.post(`https://api.imgbb.com/1/upload?key=${imgbbToken}`,
         data, { headers: { "Content-Type": "multipart/form-data",},})
-        .then((response) => {
+        .then(async (response) => {
           // Send the imgUrl to backend to store in the database
           let imgUrl = response.data.data.url;
-          axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl })
-          .catch((err) => {
-            console.log("API error ↓");
-            console.log(err);
-            if (err.response.data.error) {
-              console.log(err.response.data.error);
-        }});
+          await axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl }).then(async (backendResponse) => {
+          console.log(backendResponse);
+      
+          // Parse the JSON response
+          const responseData = backendResponse.data;
+      
+          // Access the stored ID
+          const storedId = responseData.insertedId;
+      
+          console.log('Data stored successfully with ID:', storedId);
         // Send API request to store imgUrl to MongoDB
         //   axios.post('http://localhost:3001/api/storeImageUrl', { imgUrl })})
         //   .catch((err) => {
@@ -38,6 +41,7 @@ function ImageUpload() {
         //     if (err.response.data.error) {
         //       console.log(err.response.data.error);
         });
+      });
         
       // Send the imgUrl to Veryfi API
       // let imgUrl = 'https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg';
