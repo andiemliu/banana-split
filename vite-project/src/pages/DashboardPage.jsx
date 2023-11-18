@@ -12,7 +12,8 @@ const DashboardPage = ({ numberOfCards }) => {
 
     return (
         <>
-            <NavBarComponent></NavBarComponent>
+            <NavBarComponent className="navBarSpacing"></NavBarComponent>
+            <h1>Your Receipts</h1>
             <div className="separate">
                 {/* <div>
                     <ReceiptComponent></ReceiptComponent>

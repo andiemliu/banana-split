@@ -1,4 +1,20 @@
 .navBar {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    height: 80px;
+    /* background-color: white; */
+    /* margin-left: 100px; */
+}
+
+
+/* .me-auto {
+    display: flex;
+} */
+
+.uploadReceiptButton {
+    margin-left: 400px;
+}
+
+.brand {
+    margin-left: 60px;
 }
