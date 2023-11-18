@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import LineItemComponent from './LineItemComponent'; 
 
 const ReceiptBody = ({ id }) => {
   const [data, setData] = useState(null);
@@ -9,7 +10,6 @@ const ReceiptBody = ({ id }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("hi");
         // Make a request to your backend API with the provided ID
         const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
         console.log(response);
@@ -49,7 +49,9 @@ const ReceiptBody = ({ id }) => {
   // Render your component with the fetched data
   return (
     <div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data.map((lineItem, index) => (
+        <LineItemComponent key={index} lineItem={lineItem} />
+      ))}
     </div>
   );
 };
