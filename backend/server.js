@@ -63,41 +63,43 @@ app.post('/api/itemizeReceipt', async (req, res) => {
     const { imgUrl } = req.body;
 
     // UNCOMMENT THESE LINES AND THE FIRST LINE IN THE TRY BLOCK TO ACTUALLY GET THE DATA 
-    const options = {
-      method: 'POST',
-      url: 'https://api.veryfi.com/api/v8/partner/documents',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'CLIENT-ID': veryfiClientID,
-        AUTHORIZATION: veryfiAuth
-      },
-      data: {
-        file_url: imgUrl
-      }
-    };
+    // const options = {
+    //   method: 'POST',
+    //   url: 'https://api.veryfi.com/api/v8/partner/documents',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Accept: 'application/json',
+    //     'CLIENT-ID': veryfiClientID,
+    //     AUTHORIZATION: veryfiAuth
+    //   },
+    //   data: {
+    //     file_url: imgUrl
+    //   }
+    // };
 
     try {
-    const { data } = await axios.request(options);
+    // const { data } = await axios.request(options);
      
       try {
-        // Connect the client to the server
-        await client.connect();
-        // Specify a database to access
-        const db = client.db(dbName);
-        // Reference a particular collection
-        const col = db.collection('images');
+        // // Connect the client to the server
+        // await client.connect();
+        // // Specify a database to access
+        // const db = client.db(dbName);
+        // // Reference a particular collection
+        // const col = db.collection('images');
     
-        // Create a new instance of the Receipt model
-        const receipt = new Receipt({ imgUrl, data });
-        console.log(receipt);
+        // // Create a new instance of the Receipt model
+        // const receipt = new Receipt({ imgUrl, data });
+        // console.log(receipt);
     
-        // Save the image to the database
-        const result = await col.insertOne(receipt);
-        console.log(result);
-        const insertedId = result.insertedId; // Store the ID for future use
-        console.log('Receipt saved to the database. ID:', insertedId);
+        // // Save the image to the database
+        // const result = await col.insertOne(receipt);
+        // console.log(result);
+        // const insertedId = result.insertedId; // Store the ID for future use
+        // console.log('Receipt saved to the database. ID:', insertedId);
     
+        //Uncomment this line to actually save the data to the database
+        const insertedId = '6552d6a48317ff1e724bdd90';
         // Return the insertedId in the response
         res.status(201).json({ message: 'Data stored successfully', insertedId });
       } catch (error) {

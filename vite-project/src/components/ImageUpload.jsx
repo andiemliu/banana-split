@@ -23,13 +23,11 @@ function ImageUpload() {
         .then(async (response) => {
           // Send the imgUrl to backend to store in the database
           let imgUrl = response.data.data.url;
-          const backendResponse = axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl });
-          if (!response.ok) {
-            throw new Error(`Error saving itemized receipt to DB! Status: ${response.status}`);
-          }
+          await axios.post('http://localhost:3001/api/itemizeReceipt', { imgUrl }).then(async (backendResponse) => {
+          console.log(backendResponse);
       
           // Parse the JSON response
-          const responseData = await response.json();
+          const responseData = backendResponse.data;
       
           // Access the stored ID
           const storedId = responseData.insertedId;
@@ -43,6 +41,7 @@ function ImageUpload() {
         //     if (err.response.data.error) {
         //       console.log(err.response.data.error);
         });
+      });
         
       // Send the imgUrl to Veryfi API
       // let imgUrl = 'https://veryfi-testing-public.s3.us-west-2.amazonaws.com/receipt.jpg';
