@@ -117,9 +117,13 @@ app.post('/api/itemizeReceipt', async (req, res) => {
 });
 
 app.get('/api/getReceipt/:id', async (req, res) => {
+  console.log("getReceipt");
   try {
+    console.log('Try to connect to server');
+
     // Connect the client to the server
     await client.connect();
+    console.log('Connected successfully to server');
     // Specify a database to access
     const db = client.db(dbName);
     // Reference a particular collection

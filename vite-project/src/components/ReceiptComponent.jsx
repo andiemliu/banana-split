@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import ReceiptBody from './ReceiptBody';
 
 const ReceiptComponent = ({title, content}) => {
 
@@ -26,6 +27,7 @@ const ReceiptComponent = ({title, content}) => {
               I will not close if you click outside me. Don not even try to press
               escape key.
             </Modal.Body>
+            <ReceiptBody id={'6555a1f2bea95e6d64c85140'} />
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Close
