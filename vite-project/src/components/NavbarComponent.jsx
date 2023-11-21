@@ -35,7 +35,7 @@ const NavBarComponent = () => {
                             <Nav.Link href="#link" style={customLinkStyle}>Profiles</Nav.Link>
                             <Button className="uploadReceiptButton" variant="outline-warning" onClick={handleShow} >Upload a Receipt</Button>
 
-                        <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+                        <Modal dialogClassName='uploadModal' show={show} onHide={handleClose} backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
                             <Modal.Title>Upload Receipt Here</Modal.Title>
                             </Modal.Header>

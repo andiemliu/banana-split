@@ -1,5 +1,5 @@
 import NavBarComponent from "../components/NavbarComponent";
-import ReceiptComponent from "../components/receiptComponent";
+import ReceiptComponent from "../components/ReceiptComponent";
 import './dashboardPage.css';
 import PropTypes from 'prop-types';
 
