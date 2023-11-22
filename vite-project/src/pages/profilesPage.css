@@ -1,0 +1,30 @@
+.fullProfilesPage {
+    background-image: url('../assets/pinkRedBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.separate1 {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.separate1 > div {
+    margin-right: 25px;
+    margin-left: 25px;
+    margin-bottom: 40px;
+}
+
+.navBarSpacing {
+    margin-bottom: 100px;
+}
+
+.yourProfiles {
+    padding-top: 110px;
+    font-size: 30px
+}

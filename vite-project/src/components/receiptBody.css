@@ -1,0 +1,32 @@
+.modalBody {
+    display: flex;
+    flex-direction: row;
+}
+
+.person {
+    display: flex;
+    flex-direction: row;
+}
+
+.receiptTable {
+    margin-right: 30px;
+}
+
+.last-div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.middle-div {
+    margin-bottom: 15px;
+}
+
+.totalToPayer {
+    font-size: 25px;
+}
+
+.amount {
+    margin-left: 10px;
+}

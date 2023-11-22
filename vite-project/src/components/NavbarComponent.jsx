@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import './navBar.css';
 import UploadPage from './UploadPage';
+import { Link } from 'react-router-dom';
 
 
 const NavBarComponent = () => {
@@ -31,8 +32,8 @@ const NavBarComponent = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                            <Nav.Link href="#home" style={customLinkStyle}className="navBarLink">Dashboard</Nav.Link>
-                            <Nav.Link href="#link" style={customLinkStyle}>Profiles</Nav.Link>
+                            <Nav.Link as={Link} to="/" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
+                            <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
                             <Button className="uploadReceiptButton" variant="outline-warning" onClick={handleShow} >Upload a Receipt</Button>
 
                         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>

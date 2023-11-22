@@ -1,5 +1,13 @@
+.fullDashboardPage {
+    background-image: url('../assets/yellowOrangeBackground.png');
+    background-size: cover;
+    /* background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; */
+}
+
 .separate {
-    margin-top: 100px;
+    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -14,4 +22,9 @@
 
 .navBarSpacing {
     margin-bottom: 100px;
+}
+
+.yourReceipts {
+    padding-top: 110px;
+    font-size: 30px
 }

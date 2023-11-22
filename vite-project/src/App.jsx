@@ -1,11 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './pages/dashboardPage';
-import ProfilePage from './pages/profilesPage';
-
-import { useState } from 'react'
-import UploadPage from './components/UploadPage';
-import ReceiptPreprocessPage from './components/ReceiptPreprocessPage';
+import ProfilesPage from './pages/profilesPage';
 
 function App() {
 
@@ -14,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DashboardPage numberOfCards={5}/>} />
-          <Route path="/profiles" element={<ProfilePage />} />
+          <Route path="/profiles" element={<ProfilesPage numberOfPeople={4}/>} />
         </Routes>
       </BrowserRouter>
       {/* <NavBarComponent></NavBarComponent> */}

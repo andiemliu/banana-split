@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 const DashboardPage = ({ numberOfCards }) => {
 
     const displayedCards = Array.from({ length: numberOfCards }, (_, index) => ({
-        title: `Card ${index + 1}`,
-        content: `Content for Card ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
+        title: `Receipt ${index + 1}`,
+        content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
       }));
 
     return (
-        <>
+        <div className="fullDashboardPage">
             <NavBarComponent className="navBarSpacing"></NavBarComponent>
-            <h1>Your Receipts</h1>
+            <h1 className="yourReceipts">Your Receipts</h1>
             <div className="separate">
                 {/* <div>
                     <ReceiptComponent></ReceiptComponent>
@@ -36,7 +36,7 @@ const DashboardPage = ({ numberOfCards }) => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     )
 }
 

@@ -10,6 +10,7 @@ const ReceiptComponent = ({title, content}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // const [fullscreen, setFullscreen] = useState(true);
 
   return (
       <Card style={{ width: '18rem' }}>
@@ -19,9 +20,9 @@ const ReceiptComponent = ({title, content}) => {
           <Card.Text>{content}</Card.Text>
           <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
 
-          <Modal show={show} onHide={handleClose} keyboard={false}>
+          <Modal show={show} onHide={handleClose} keyboard={false} size="lg">
             <Modal.Header closeButton>
-              <Modal.Title>Modal title</Modal.Title>
+              <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <ReceiptBody id={'6555a1f2bea95e6d64c85140'} />
