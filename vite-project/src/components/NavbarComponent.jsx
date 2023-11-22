@@ -34,7 +34,7 @@ const NavBarComponent = () => {
                     <Nav className="me-auto">
                             <Nav.Link as={Link} to="/" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
                             <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
-                            <Button className="uploadReceiptButton" variant="outline-warning" onClick={handleShow} >Upload a Receipt</Button>
+                            <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShow} >Upload a Receipt</Button>
 
                         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>

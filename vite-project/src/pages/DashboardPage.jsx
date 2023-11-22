@@ -31,7 +31,7 @@ const DashboardPage = ({ numberOfCards }) => {
                     <ReceiptComponent></ReceiptComponent>
                 </div> */}
                 {displayedCards.map((card, index) => (
-                    <div key={index}>
+                    <div key={index} className="individualReceipts">
                         <ReceiptComponent title={card.title} content={card.content}></ReceiptComponent>
                     </div>
                 ))}

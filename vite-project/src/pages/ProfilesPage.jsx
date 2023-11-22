@@ -17,7 +17,7 @@ const ProfilesPage = ({ numberOfPeople }) => {
             <h1 className="yourProfiles">Your Profiles</h1>
             <div className="separate1">
                 {displayedProfiles.map((profile, index) => (
-                    <div key={index}>
+                    <div key={index} className="individualProfiles">
                         <PersonComponent name={profile.name} others={profile.others}></PersonComponent>
                     </div>
                 ))}

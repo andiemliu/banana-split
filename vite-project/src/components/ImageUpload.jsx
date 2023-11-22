@@ -1,6 +1,7 @@
 import React from 'react';
 import  { useState } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 function ImageUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -60,7 +61,7 @@ function ImageUpload() {
   return (
     <form onSubmit={handleSubmit}>
       <input type="file" onChange={handleFileSelect} />
-      <button type="submit">Upload</button>
+      <Button type="submit">Upload</Button>
     </form>
   );
 }
