@@ -1,0 +1,9 @@
+.line-item > h3 {
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.line-item > p {
+    font-size: 10x;
+    margin-bottom: 0px;
+}

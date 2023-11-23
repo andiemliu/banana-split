@@ -1,0 +1,12 @@
+.receiptNamesSeparator {
+    display: flex;
+    flex-direction: row;
+}
+
+.receiptItems {
+    margin-right: 15px;
+}
+
+.itemBlock {
+    margin-bottom: 15px;
+}
