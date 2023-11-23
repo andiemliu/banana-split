@@ -11,6 +11,50 @@ const ReceiptBody = ({ id }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const people = ['Person 1', 'Person 2', 'Person 3'];
+  // const items = [
+  //   { name: 'Item 1', price: 10 },
+  //   { name: 'Item 2', price: 20 },
+  //   { name: 'Item 3', price: 30 },
+  // ];
+
+  const handleCheckboxChange = (personIndex, itemIndex) => {
+    setCheckedItems((prevCheckedItems) => {
+      const key = `${personIndex}-${itemIndex}`;
+      return { ...prevCheckedItems, [key]: !prevCheckedItems[key] };
+    });
+  };
+
+  // const calculateOwedAmount = (personIndex) => {
+  //   return data.reduce((total, item, itemIndex) => {
+  //     const key = `${personIndex}-${itemIndex}`;
+  //     return total + (checkedItems[key] ? item.total : 0);
+  //   }, 0);
+  // };
+
+  const calculateOwedAmount = (personIndex) => {
+    return data.reduce((total, item, itemIndex) => {
+      const key = `${personIndex}-${itemIndex}`;
+      const isChecked = checkedItems[key];
+  
+      // Count the number of people who checked this checkbox
+      const numberOfPeopleChecked = people.reduce(
+        (count, _, currentIndex) =>
+          checkedItems[`${currentIndex}-${itemIndex}`] ? count + 1 : count,
+        0
+      );
+  
+      // Calculate the owed amount based on the number of people checked
+      const amountToAdd = isChecked && numberOfPeopleChecked !== 0
+        ? item.total / numberOfPeopleChecked
+        : 0;
+  
+      return total + amountToAdd;
+    }, 0).toFixed(2);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +94,7 @@ const ReceiptBody = ({ id }) => {
     return <p>No data found</p>;
   }
 
+
   // Render your component with the fetched data
   return (
     <div className='modalBody'>
@@ -57,36 +102,72 @@ const ReceiptBody = ({ id }) => {
         <LineItemComponent key={index} lineItem={lineItem} />
       ))} */}
       <div className='receiptTable'>
-        <Table responsive>
+        <Table hover>
           <thead>
             <tr>
-              <th>Receipt</th>
-              {Array.from({ length: 4 }).map((_, index) => (
-                <th key={index}>Person {index}</th>
+              <th>Items</th>
+              {people.map((person, personIndex) => (
+                <th key={personIndex}>{person}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {data.map((content, index) => (
-              <tr key={index}>
-                <td>{content.description} - ${content.total}</td>
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <td key={index}>
-                    <Form>
-                      {['checkbox'].map((type) => (
-                        <div key={`default-${type}`} className="mb-3">
-                          <Form.Check // prettier-ignore
-                            type={type}
-                            id={`default-${type}`}                        />
-                        </div>
-                      ))}
-                    </Form>
+            {data.map((item, itemIndex) => (
+              <tr key={itemIndex}>
+                <td>{item.description} (${item.total})</td>
+                {people.map((person, personIndex) => (
+                  <td key={personIndex}>
+                    <Form.Check
+                      type="checkbox"
+                      checked={checkedItems[`${personIndex}-${itemIndex}`] || false}
+                      onChange={() => handleCheckboxChange(personIndex, itemIndex)}
+                    />
                   </td>
                 ))}
               </tr>
             ))}
           </tbody>
+          <tfoot>
+            <tr>
+              <td>Total Owed</td>
+              {people.map((person, personIndex) => (
+                <td key={personIndex}>{calculateOwedAmount(personIndex)}</td>
+              ))}
+            </tr>
+          </tfoot>
         </Table>
+        {/* <Form onSubmit={handleFormSubmit}>
+          <Table responsive>
+            <thead>
+              <tr>
+                <th>Receipt</th>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <th key={index}>Person {index}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((content, index) => (
+                <tr key={index}>
+                  <td>{content.description} - ${content.total}</td>
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <td key={index}>
+                      <Form>
+                        {['checkbox'].map((type) => (
+                          <div key={`default-${type}`} className="mb-3">
+                            <Form.Check // prettier-ignore
+                              type={type}
+                              id={`default-${type}`}                        />
+                          </div>
+                        ))}
+                      </Form>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </Form> */}
       </div>
       <div className="last-div">
         <div>
@@ -105,7 +186,7 @@ const ReceiptBody = ({ id }) => {
             ))}
         </div>
         <div>
-          <Button variant="primary">Calculate</Button>
+          <Button type="submit" variant="primary">Calculate</Button>
         </div>
       </div>
     </div>

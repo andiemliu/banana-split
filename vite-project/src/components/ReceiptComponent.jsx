@@ -10,6 +10,15 @@ const ReceiptComponent = ({title, content}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // const [checkedItems, setCheckedItems] = useState({});
+
+  // const handleCheckboxChange = (personIndex, itemIndex) => {
+  //   setCheckedItems((prevCheckedItems) => {
+  //     const key = `${personIndex}-${itemIndex}`;
+  //     return { ...prevCheckedItems, [key]: !prevCheckedItems[key] };
+  //   });
+  // };
   // const [fullscreen, setFullscreen] = useState(true);
 
   return (
