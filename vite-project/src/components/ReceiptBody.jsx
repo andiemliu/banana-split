@@ -3,16 +3,17 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 import './receiptBody.css';
 
-const ReceiptBody = ({ id }) => {
+const ReceiptBody = ({ id, peopleNamesArr }) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [checkedItems, setCheckedItems] = useState({});
 
-  const people = ['Person 1', 'Person 2', 'Person 3'];
+  // const people = ['Person 1', 'Person 2', 'Person 3'];
   // const items = [
   //   { name: 'Item 1', price: 10 },
   //   { name: 'Item 2', price: 20 },
@@ -39,14 +40,14 @@ const ReceiptBody = ({ id }) => {
       const isChecked = checkedItems[key];
   
       // Count the number of people who checked this checkbox
-      const numberOfPeopleChecked = people.reduce(
+      const numberOfPeopleChecked = peopleNamesArr.reduce(
         (count, _, currentIndex) =>
           checkedItems[`${currentIndex}-${itemIndex}`] ? count + 1 : count,
         0
       );
   
       // Calculate the owed amount based on the number of people checked
-      const amountToAdd = isChecked && numberOfPeopleChecked !== 0
+      const amountToAdd = isChecked && numberOfPeopleChecked !== 0 && personIndex != peopleNamesArr.length - 1
         ? item.total / numberOfPeopleChecked
         : 0;
   
@@ -105,7 +106,7 @@ const ReceiptBody = ({ id }) => {
           <thead>
             <tr>
               <th>Items</th>
-              {people.map((person, personIndex) => (
+              {peopleNamesArr?.map((person, personIndex) => (
                 <th key={personIndex}>{person}</th>
               ))}
             </tr>
@@ -114,7 +115,7 @@ const ReceiptBody = ({ id }) => {
             {data.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td>{item.description} (${item.total})</td>
-                {people.map((person, personIndex) => (
+                {peopleNamesArr?.map((person, personIndex) => (
                   <td key={personIndex}>
                     <Form.Check
                       type="checkbox"
@@ -129,7 +130,7 @@ const ReceiptBody = ({ id }) => {
           <tfoot>
             <tr>
               <td>Total Owed</td>
-              {people.map((person, personIndex) => (
+              {peopleNamesArr?.map((person, personIndex) => (
                 <td key={personIndex}>{calculateOwedAmount(personIndex)}</td>
               ))}
             </tr>
@@ -168,7 +169,8 @@ const ReceiptBody = ({ id }) => {
           </Table>
         </Form> */}
       </div>
-      <div className="last-div">
+      {/* FIGURE OUT not sure if we need this section below anymore?? since table already has amount owed */}
+      {/* <div className="last-div">
         <div>
           <h2 className="totalToPayer">Total to Payer</h2>
         </div>
@@ -187,9 +189,14 @@ const ReceiptBody = ({ id }) => {
         <div>
           <Button type="submit" variant="primary">Calculate</Button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
+};
+
+ReceiptBody.propTypes = {
+  id: PropTypes.string,
+  peopleNamesArr: PropTypes.array,
 };
 
 export default ReceiptBody;

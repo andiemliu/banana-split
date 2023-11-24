@@ -5,7 +5,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReceiptBody from './ReceiptBody';
 
-const ReceiptComponent = ({title, content}) => {
+const ReceiptComponent = ({title, content, peopleNamesArr}) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -34,7 +34,7 @@ const ReceiptComponent = ({title, content}) => {
               <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ReceiptBody id={'6555a1f2bea95e6d64c85140'} />
+              <ReceiptBody id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr}/>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -50,6 +50,7 @@ const ReceiptComponent = ({title, content}) => {
 ReceiptComponent.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
+  peopleNamesArr: PropTypes.array
 };
 
 export default ReceiptComponent;

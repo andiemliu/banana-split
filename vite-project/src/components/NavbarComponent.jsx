@@ -13,16 +13,25 @@ const NavBarComponent = () => {
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
+    const [showThirdModal, setShowThirdModal] = useState(false);
+
 
     const handleShowFirstModal = () => setShowFirstModal(true);
     const handleCloseFirstModal = () => setShowFirstModal(false);
 
+
     const handleShowSecondModal = () => {
-        setShowFirstModal(false); // Close the first modal
-        setShowSecondModal(true); // Open the second modal
+        setShowFirstModal(false);
+        setShowSecondModal(true);
     };
     
+    const handleShowThirdModal = () => {
+        setShowSecondModal(false);
+        setShowThirdModal(true); 
+    };
+
     const handleCloseSecondModal = () => setShowSecondModal(false);
+    const handleCloseThirdModal = () => setShowThirdModal(false);
 
     const customBrandStyle = {
         fontSize: '40px',
@@ -47,7 +56,7 @@ const NavBarComponent = () => {
 
                         <Modal show={showFirstModal} onHide={handleCloseFirstModal} backdrop="static" keyboard={false}>
                             <Modal.Header closeButton>
-                            <Modal.Title>Upload Receipt Here</Modal.Title>
+                            <Modal.Title>1. Upload Receipt Here</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <UploadPage />
@@ -62,7 +71,7 @@ const NavBarComponent = () => {
                             </Modal.Footer>
                         </Modal>
 
-                        <UserInputModal show={showSecondModal} onHide={handleCloseSecondModal} id={'6555a1f2bea95e6d64c85140'} />
+                        <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} />
 
                     </Nav>
                     </Navbar.Collapse>

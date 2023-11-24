@@ -3,10 +3,11 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import LineItemComponent from './LineItemComponent'; 
 import { FormControl, ListGroup } from 'react-bootstrap';
+import TableModal from './tableModal';
 import './userInputModal.css';
 
 
-const UserInputModal = ({ show, onHide, id }) => {
+const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id }) => {
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ const UserInputModal = ({ show, onHide, id }) => {
 
     const [inputText, setInputText] = useState('');
     const [payerName, setPayerName] = useState('');
-    const [people, setPeople] = useState([]);
+    const [peopleNames, setPeopleNames] = useState([]);
 
     const handlePayerInputChange = (event) => {
         setPayerName(event.target.value);
@@ -33,7 +34,7 @@ const UserInputModal = ({ show, onHide, id }) => {
 
     const handleEnterPress = (event) => {
         if (event.key === 'Enter' && inputText.trim() !== '') {
-        setPeople((prevPeople) => [...prevPeople, inputText]);
+        setPeopleNames((prevPeople) => [...prevPeople, inputText]);
         setInputText(''); // Clear the input after pressing Enter
         }
     };
@@ -79,48 +80,54 @@ const UserInputModal = ({ show, onHide, id }) => {
 
 
     return (
-        <Modal show={show} onHide={onHide}>
-            <Modal.Header closeButton>
-                <Modal.Title>Second Modal</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <div className='receiptNamesSeparator'>
-                    <div className='receiptItems'>
-                        {data.map((lineItem, index) => (
-                            <div key={index} className='itemBlock'>
-                                <LineItemComponent key={index} lineItem={lineItem} />
-                            </div>
-                        ))}
-                    </div>
-                    <div>
-                        <h3>Payer</h3>
-                        <FormControl
-                            type="text"
-                            value={payerName}
-                            onChange={handlePayerInputChange}
-                            onKeyDown={handlePayerEnterPress}
-                            placeholder="Press Enter to add item"
-                        />
-                        <h3>Others</h3>
-                        <FormControl
-                            type="text"
-                            value={inputText}
-                            onChange={handleInputChange}
-                            onKeyDown={handleEnterPress}
-                            placeholder="Press Enter to add item"
-                        />
-                        <ListGroup>
-                            {people.map((item, index) => (
-                            <ListGroup.Item key={index}>{item}</ListGroup.Item>
+        <>
+            <Modal show={showSecond} onHide={onHideSecond}>
+                <Modal.Header closeButton>
+                    <Modal.Title>2. Enter Names</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className='receiptNamesSeparator'>
+                        <div className='receiptItems'>
+                            <h3>Receipt Items</h3>
+                            {data.map((lineItem, index) => (
+                                <div key={index} className='itemBlock'>
+                                    <LineItemComponent key={index} lineItem={lineItem} />
+                                </div>
                             ))}
-                        </ListGroup>
+                        </div>
+                        <div>
+                            <h3>Payer</h3>
+                            <FormControl
+                                type="text"
+                                value={payerName}
+                                onChange={handlePayerInputChange}
+                                onKeyDown={handlePayerEnterPress}
+                                placeholder="Type in payer's name"
+                            />
+                            <h3 id="others">Others</h3>
+                            <FormControl
+                                type="text"
+                                value={inputText}
+                                onChange={handleInputChange}
+                                onKeyDown={handleEnterPress}
+                                placeholder="Press Enter to add a new name"
+                            />
+                            <ListGroup>
+                                {peopleNames.map((person, index) => (
+                                <ListGroup.Item key={index}>{person}</ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </div>
                     </div>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onHide}>Close</Button>
-            </Modal.Footer>
-        </Modal>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={onHideSecond}>Close</Button>
+                    <Button variant="primary" onClick={handleShowThirdModal}>Next</Button>
+                </Modal.Footer>
+            </Modal>
+
+            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]}></TableModal>
+        </>
         );
     };
 

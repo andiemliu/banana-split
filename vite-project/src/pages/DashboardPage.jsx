@@ -9,6 +9,8 @@ const DashboardPage = ({ numberOfCards }) => {
         title: `Receipt ${index + 1}`,
         content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
       }));
+    
+    const peopleNamesArr = ['Person 1', 'Person 2', 'Person 3']
 
     return (
         <div className="fullDashboardPage">
@@ -32,7 +34,7 @@ const DashboardPage = ({ numberOfCards }) => {
                 </div> */}
                 {displayedCards.map((card, index) => (
                     <div key={index} className="individualReceipts">
-                        <ReceiptComponent title={card.title} content={card.content}></ReceiptComponent>
+                        <ReceiptComponent title={card.title} content={card.content} peopleNamesArr={peopleNamesArr}></ReceiptComponent>
                     </div>
                 ))}
             </div>
