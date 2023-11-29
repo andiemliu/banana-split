@@ -9,7 +9,7 @@ import UploadPage from './UploadPage';
 import { Link } from 'react-router-dom';
 import UserInputModal from './UserInputModal';
 
-const NavBarComponent = ({ onCardSave }) => {
+const NavBarComponent = ({ page, onCardSave }) => {
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
@@ -46,32 +46,38 @@ const NavBarComponent = ({ onCardSave }) => {
         <div>
             <Navbar fixed="top" bg="light" className='navBar' expand="lg">
                 <Container className='container'>
-                    <Navbar.Brand href="#home" className='brand' style={customBrandStyle}>BananaSplit</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/" className='brand' style={customBrandStyle}>BananaSplit</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
+                        <Nav.Link as={Link} to="/dashboard" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
                         <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
-                        <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShowFirstModal} >Upload a Receipt</Button>
+                        {(page == 1) ? 
+                            (<>
+                            <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShowFirstModal} >Upload a Receipt</Button>
 
-                        <Modal show={showFirstModal} onHide={handleCloseFirstModal} backdrop="static" keyboard={false}>
-                            <Modal.Header closeButton>
-                            <Modal.Title>1. Upload Receipt Here</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <UploadPage />
-                            </Modal.Body>
-                            <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseFirstModal}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleShowSecondModal}>
-                                Next
-                            </Button>
-                            </Modal.Footer>
-                        </Modal>
+                            <Modal show={showFirstModal} onHide={handleCloseFirstModal} backdrop="static" keyboard={false}>
+                                <Modal.Header closeButton>
+                                <Modal.Title>1. Upload Receipt Here</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <UploadPage />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseFirstModal}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={handleShowSecondModal}>
+                                    Next
+                                </Button>
+                                </Modal.Footer>
+                            </Modal>
 
-                        <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} onCardSave={onCardSave}/>
+                            <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} onCardSave={onCardSave} />
+                        </>)
+                            : <div></div>
+                        }
+
 
                     </Nav>
                     </Navbar.Collapse>

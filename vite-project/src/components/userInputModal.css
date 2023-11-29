@@ -18,3 +18,16 @@
 #others {
     margin-top: 10px;
 }
+
+.deleteButton {
+    margin-right: 13px;
+    margin-left: -13px;
+}
+
+.otherInput {
+    margin-bottom: 5px;
+}
+
+.nameList {
+    padding: 0;
+}

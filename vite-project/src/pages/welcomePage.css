@@ -1,0 +1,21 @@
+.welcomeMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 15%;
+}
+
+.secondDiv {
+    margin-top: 7px;
+}
+
+.thirdDiv {
+    margin-top: 25px;
+}
+
+.fullWelcomePage {
+    background-image: url('../assets/welcomePageBackground.png');
+    background-size: cover;
+    min-width: 1200px;
+    min-height: 100vh;
+}

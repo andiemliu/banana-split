@@ -39,6 +39,10 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
         }
     };
 
+    const handleDelete = (index) => {
+        setPeopleNames((prevPeople) => prevPeople.filter((_, i) => i !== index));
+      };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -111,10 +115,19 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                                 onChange={handleInputChange}
                                 onKeyDown={handleEnterPress}
                                 placeholder="Press Enter to add a new name"
+                                className="otherInput"
                             />
                             <ListGroup>
                                 {peopleNames.map((person, index) => (
-                                <ListGroup.Item key={index}>{person}</ListGroup.Item>
+                                <ListGroup.Item key={index} className="nameList" style={{
+                                    outline: 'none',
+                                    border: 'none',
+                                    backgroundColor: 'transparent',
+                                    position: 'relative',
+                                  }}>
+                                    <Button variant="outline-danger" size="sm" onClick={() => handleDelete(index)} className="deleteButton">Delete</Button>
+                                    {person}
+                                </ListGroup.Item>
                                 ))}
                             </ListGroup>
                         </div>
@@ -126,7 +139,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 </Modal.Footer>
             </Modal>
 
-            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave}></TableModal>
+            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
         </>
         );
     };

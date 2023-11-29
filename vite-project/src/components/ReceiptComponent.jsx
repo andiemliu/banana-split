@@ -5,7 +5,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReceiptBody from './ReceiptBody';
 
-const ReceiptComponent = ({title, content, peopleNamesArr}) => {
+const ReceiptComponent = ({title, peopleNamesArr}) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -21,14 +21,16 @@ const ReceiptComponent = ({title, content, peopleNamesArr}) => {
   // };
   // const [fullscreen, setFullscreen] = useState(true);
 
+  const peopleNamesString = peopleNamesArr.join(', ');
+
   return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
-          <Card.Text>{content}</Card.Text>
-          {title == "No title yet" ? 
-            <p>Click Upload a Receipt Above to get started!</p>
+          <Card.Text>{peopleNamesString}</Card.Text>
+          {title == "No Receipts Yet" ? 
+            <p>Click Upload a Receipt above to get started!</p>
             : 
             <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
           }
@@ -53,7 +55,7 @@ const ReceiptComponent = ({title, content, peopleNamesArr}) => {
 
 ReceiptComponent.propTypes = {
   title: PropTypes.string,
-  content: PropTypes.array,
+  // content: PropTypes.array,
   peopleNamesArr: PropTypes.array
 };
 

@@ -1,6 +1,7 @@
 import ReceiptBody from "./ReceiptBody";
 import { Modal, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const TableModal = ({ showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
 
@@ -15,7 +16,7 @@ const TableModal = ({ showThird, onHideThird, id, peopleNamesArr, onCardSave }) 
         onCardSave(formData);
         onHideThird();
       }, [formData]);
-      
+
     const handleSave = () => {
         // setFormData({ title: "Receipt" , people: peopleNamesArr });
         console.log("Before", formData)
@@ -41,5 +42,9 @@ const TableModal = ({ showThird, onHideThird, id, peopleNamesArr, onCardSave }) 
         </Modal>
     )
 }
+
+TableModal.propTypes = {
+    onCardSave: PropTypes.func,
+  };
 
 export default TableModal;

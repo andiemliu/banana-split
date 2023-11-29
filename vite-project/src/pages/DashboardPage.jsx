@@ -2,20 +2,16 @@ import NavBarComponent from "../components/navbarComponent";
 import ReceiptComponent from "../components/receiptComponent";
 import './dashboardPage.css';
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 
-const DashboardPage = ({ numberOfCards }) => {
+const DashboardPage = () => {
 
-    const displayedCards = Array.from({ length: numberOfCards }, (_, index) => ({
-        title: `Receipt ${index + 1}`,
-        content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
-      }));
+    // const displayedCards = Array.from({ length: numberOfCards }, (_, index) => ({
+    //     title: `Receipt ${index + 1}`,
+    //     content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
+    //   }));
 
       const [dashboardCards, setDashboardCards] = useState([]);
-
-    //   const handleCardSave = (card) => {
-    //     setDashboardCards((prevCards) => [...prevCards, card]);
-    //   };
 
       const handleCardSave = useCallback(
         (data) => {
@@ -30,11 +26,9 @@ const DashboardPage = ({ numberOfCards }) => {
 
       const noFirstCardArr = dashboardCards.slice(1);
     
-    // const peopleNamesArr = ['Person 1', 'Person 2', 'Person 3']
-
     return (
         <div className="fullDashboardPage">
-            <NavBarComponent className="navBarSpacing" onCardSave={handleCardSave}></NavBarComponent>
+            <NavBarComponent page={1} className="navBarSpacing" onCardSave={handleCardSave} dashboardCards={dashboardCards}></NavBarComponent>
             <h1 className="yourReceipts">Your Receipts</h1>
             <div className="separate">
                 {/* {displayedCards.map((card, index) => (
@@ -42,15 +36,15 @@ const DashboardPage = ({ numberOfCards }) => {
                         <ReceiptComponent title={card.title} content={card.content} peopleNamesArr={peopleNamesArr}></ReceiptComponent>
                     </div>
                 ))} */}
-                {dashboardCards.length > 1 ? (
+                {dashboardCards?.length > 1 ? (
                     noFirstCardArr?.map((card, index) => (
                         <div key={index} className="individualReceipts">
-                            <ReceiptComponent title={card.title} content={card.people} peopleNamesArr={card.people}></ReceiptComponent>
+                            <ReceiptComponent title={card.title + " " + (index + 1).toString()} peopleNamesArr={card.people}></ReceiptComponent>
                         </div>
                         ))
                 ) : (
                     <div className="individualReceipts">
-                        <ReceiptComponent title={"No title yet"} content={"No people yet"} peopleNamesArr={[]}></ReceiptComponent>
+                        <ReceiptComponent title={"No Receipts Yet"}  peopleNamesArr={[]}></ReceiptComponent>
                     </div>)
                 }
             </div>
@@ -59,7 +53,10 @@ const DashboardPage = ({ numberOfCards }) => {
 }
 
 DashboardPage.propTypes = {
-    numberOfCards: PropTypes.number,
+    // numberOfCards: PropTypes.number,
+    dashboardCards: PropTypes.array,
+    noFirstCardArr : PropTypes.array,
+    handleCardSave: PropTypes.func
   };
 
 export default DashboardPage;
