@@ -7,7 +7,7 @@ import TableModal from './tableModal';
 import './userInputModal.css';
 
 
-const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id }) => {
+const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id, onCardSave }) => {
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -126,7 +126,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 </Modal.Footer>
             </Modal>
 
-            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]}></TableModal>
+            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave}></TableModal>
         </>
         );
     };

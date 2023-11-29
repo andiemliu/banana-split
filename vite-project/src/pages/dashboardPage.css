@@ -1,6 +1,8 @@
 .fullDashboardPage {
     background-image: url('../assets/yellowOrangeBackground.png');
     background-size: cover;
+    min-width: 1280px;
+    min-height: 100vh;
     /* background-position: center;
     background-repeat: no-repeat;
     height: 100vh; */

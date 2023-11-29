@@ -9,7 +9,7 @@ import UploadPage from './UploadPage';
 import { Link } from 'react-router-dom';
 import UserInputModal from './UserInputModal';
 
-const NavBarComponent = () => {
+const NavBarComponent = ({ onCardSave }) => {
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
@@ -71,7 +71,7 @@ const NavBarComponent = () => {
                             </Modal.Footer>
                         </Modal>
 
-                        <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} />
+                        <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} onCardSave={onCardSave}/>
 
                     </Nav>
                     </Navbar.Collapse>

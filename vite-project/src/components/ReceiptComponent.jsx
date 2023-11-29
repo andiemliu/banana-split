@@ -27,7 +27,11 @@ const ReceiptComponent = ({title, content, peopleNamesArr}) => {
           <Card.Title>{title}</Card.Title>
           {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
           <Card.Text>{content}</Card.Text>
-          <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
+          {title == "No title yet" ? 
+            <p>Click Upload a Receipt Above to get started!</p>
+            : 
+            <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
+          }
 
           <Modal show={show} onHide={handleClose} keyboard={false} size="lg">
             <Modal.Header closeButton>
@@ -49,7 +53,7 @@ const ReceiptComponent = ({title, content, peopleNamesArr}) => {
 
 ReceiptComponent.propTypes = {
   title: PropTypes.string,
-  content: PropTypes.string,
+  content: PropTypes.array,
   peopleNamesArr: PropTypes.array
 };
 
