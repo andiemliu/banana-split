@@ -5,7 +5,7 @@ import LineItemComponent from './LineItemComponent';
 import { FormControl, ListGroup } from 'react-bootstrap';
 import TableModal from './tableModal';
 import './userInputModal.css';
-
+import Table from 'react-bootstrap/Table';
 
 const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id, onCardSave }) => {
 
@@ -93,30 +93,49 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                     <div className='receiptNamesSeparator'>
                         <div className='receiptItems'>
                             <h3>Receipt Items</h3>
-                            {data.map((lineItem, index) => (
+                            {/* {data.map((lineItem, index) => (
                                 <div key={index} className='itemBlock'>
                                     <LineItemComponent key={index} lineItem={lineItem} />
                                 </div>
-                            ))}
+                            ))} */}
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((lineItem, index) => (
+                                    <LineItemComponent key={index} lineItem={lineItem} />
+                                    ))}
+                                </tbody>
+                            </Table>
                         </div>
-                        <div>
-                            <h3>Payer</h3>
-                            <FormControl
-                                type="text"
-                                value={payerName}
-                                onChange={handlePayerInputChange}
-                                onKeyDown={handlePayerEnterPress}
-                                placeholder="Type in payer's name"
-                            />
-                            <h3 id="others">Others</h3>
-                            <FormControl
-                                type="text"
-                                value={inputText}
-                                onChange={handleInputChange}
-                                onKeyDown={handleEnterPress}
-                                placeholder="Press Enter to add a new name"
-                                className="otherInput"
-                            />
+                        <div className="inputSection">
+                            <div>
+                                <h3>Payer</h3>
+                                <FormControl
+                                    type="text"
+                                    value={payerName}
+                                    onChange={handlePayerInputChange}
+                                    onKeyDown={handlePayerEnterPress}
+                                    placeholder="Type in payer's name"
+                                />
+                            </div>
+                            <div>
+                                <h3 id="others">Others</h3>
+                                <FormControl
+                                    type="text"
+                                    value={inputText}
+                                    onChange={handleInputChange}
+                                    onKeyDown={handleEnterPress}
+                                    placeholder="Press Enter to add a new name"
+                                    className="otherInput"
+                                    style={{ width: '250px' }}
+                                />
+                            </div>
                             <ListGroup>
                                 {peopleNames.map((person, index) => (
                                 <ListGroup.Item key={index} className="nameList" style={{
@@ -135,12 +154,12 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 </Modal.Body>
                 <Modal.Footer style={{ position: 'sticky', bottom: 0, background: 'white' }}>
                     <Button variant="secondary" onClick={onHideSecond}>Close</Button>
-                    <Button variant="primary" onClick={handleShowThirdModal}>Next</Button>
-                    {/* <Button variant="primary" onClick={handleShowThirdModal}>Create Card</Button> */}
+                    {/* <Button variant="primary" onClick={handleShowThirdModal}>Next</Button> */}
+                    <Button variant="primary" onClick={handleShowThirdModal}>Create Card</Button>
                 </Modal.Footer>
             </Modal>
 
-            <TableModal title={"3. Assign Amounts For Each Person"} showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
+            <TableModal title={"Receipt Card Created!"} showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
         </>
         );
     };

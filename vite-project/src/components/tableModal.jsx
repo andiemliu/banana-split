@@ -103,18 +103,34 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     };
 
     return (
-        <Modal show={showThird} onHide={onHideThird} size="lg">
+        <>
+        {title == "Receipt Card Created!" ? 
+            <Modal show={showThird} onHide={onHideThird} size="sm">
             <Modal.Header>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ReceiptBody id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
+                <div>A new receipt card has successfully been created! Please check the dashboard page to edit the card and assign items to every person in your group.</div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onHideThird}>Close</Button>
-                <Button variant="primary" onClick={handleSave}>Save</Button>
+                <Button variant="primary" onClick={handleSave}>Okay</Button>
             </Modal.Footer>
         </Modal>
+            :
+            <Modal show={showThird} onHide={onHideThird} size="lg">
+                <Modal.Header>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
+                    <ReceiptBody id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
+                </Modal.Body>
+                <Modal.Footer style={{ position: 'sticky', bottom: 0, background: 'white' }}>
+                    {/* <Button variant="secondary" onClick={onHideThird}>Close</Button> */}
+                    <Button variant="primary" onClick={handleSave}>Save</Button>
+                </Modal.Footer>
+            </Modal>
+        }
+        </>
     )
 }
 

@@ -6,11 +6,16 @@ const LineItemComponent = ({ lineItem }) => {
     const { description, quantity, total } = lineItem;
 
     return (
-        <div className="line-item">
-            <h3>{description}</h3>
-            <p>Quantity: {quantity}</p>
-            <p>Price: ${total}</p>
-        </div>
+        // <div className="line-item">
+        //     <h3>{description}</h3>
+        //     <p>Quantity: {quantity}</p>
+        //     <p>Price: ${total}</p>
+        // </div>
+        <tr>
+            <td>{description}</td>
+            <td>{quantity}</td>
+            <td>${total}</td>
+        </tr>
     );
 };
 

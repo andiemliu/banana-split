@@ -22,7 +22,7 @@ const ReceiptComponent = ({title, peopleNamesArr}) => {
   // };
   // const [fullscreen, setFullscreen] = useState(true);
 
-  const peopleNamesString = peopleNamesArr.join(', ');
+  const peopleNamesString = peopleNamesArr?.join(', ');
 
 
   return (

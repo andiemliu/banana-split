@@ -16,6 +16,7 @@ const DashboardPage = () => {
       const handleCardSave = useCallback(
         (data) => {
           setDashboardCards((prevData) => [...prevData, data]);
+          console.log(dashboardCards)
         },
         [setDashboardCards]
       );
