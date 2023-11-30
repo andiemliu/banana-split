@@ -6,93 +6,49 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './receiptBody.css';
 
-const ReceiptBody = ({ id, peopleNamesArr }) => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAmount, checkedItems, data }) => {
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  const [checkedItems, setCheckedItems] = useState({});
-
-  // const people = ['Person 1', 'Person 2', 'Person 3'];
-  // const items = [
-  //   { name: 'Item 1', price: 10 },
-  //   { name: 'Item 2', price: 20 },
-  //   { name: 'Item 3', price: 30 },
-  // ];
-
-  const handleCheckboxChange = (personIndex, itemIndex) => {
-    setCheckedItems((prevCheckedItems) => {
-      const key = `${personIndex}-${itemIndex}`;
-      return { ...prevCheckedItems, [key]: !prevCheckedItems[key] };
-    });
-  };
-
-  // const calculateOwedAmount = (personIndex) => {
-  //   return data.reduce((total, item, itemIndex) => {
-  //     const key = `${personIndex}-${itemIndex}`;
-  //     return total + (checkedItems[key] ? item.total : 0);
-  //   }, 0);
-  // };
-
-  const calculateOwedAmount = (personIndex) => {
-    return data.reduce((total, item, itemIndex) => {
-      const key = `${personIndex}-${itemIndex}`;
-      const isChecked = checkedItems[key];
-  
-      // Count the number of people who checked this checkbox
-      const numberOfPeopleChecked = peopleNamesArr.reduce(
-        (count, _, currentIndex) =>
-          checkedItems[`${currentIndex}-${itemIndex}`] ? count + 1 : count,
-        0
-      );
-  
-      // Calculate the owed amount based on the number of people checked
-      const amountToAdd = isChecked && numberOfPeopleChecked !== 0 && personIndex != peopleNamesArr.length - 1
-        ? item.total / numberOfPeopleChecked
-        : 0;
-  
-      return total + amountToAdd;
-    }, 0).toFixed(2);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make a request to your backend API with the provided ID
-        const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-        console.log(response);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make a request to your backend API with the provided ID
+  //       const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
+  //       console.log(response);
         
 
-        // Parse the JSON response
-        console.log(response);
-        const lineItems = response.data.data.data.line_items;
+  //       // Parse the JSON response
+  //       console.log(response);
+  //       const lineItems = response.data.data.data.line_items;
 
-        // Update state with the fetched data
-        setData(lineItems);
-      } catch (error) {
-        // Handle errors
-        setError(error.message);
-      } finally {
-        // Update loading state regardless of success or failure
-        setLoading(false);
-      }
-    };
+  //       // Update state with the fetched data
+  //       setData(lineItems);
+  //     } catch (error) {
+  //       // Handle errors
+  //       setError(error.message);
+  //     } finally {
+  //       // Update loading state regardless of success or failure
+  //       setLoading(false);
+  //     }
+  //   };
 
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, [id]); // Only re-run the effect if the 'id' prop changes
+  //   // Call the fetchData function when the component mounts
+  //   fetchData();
+  // }, [id]); // Only re-run the effect if the 'id' prop changes
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error}</p>;
+  // }
 
-  if (!data) {
-    return <p>No data found</p>;
-  }
+  // if (!data) {
+  //   return <p>No data found</p>;
+  // }
 
 
   // Render your component with the fetched data
@@ -197,6 +153,7 @@ const ReceiptBody = ({ id, peopleNamesArr }) => {
 ReceiptBody.propTypes = {
   id: PropTypes.string,
   peopleNamesArr: PropTypes.array,
+  data: PropTypes.array
 };
 
 export default ReceiptBody;

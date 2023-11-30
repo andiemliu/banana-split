@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReceiptBody from './ReceiptBody';
+import TableModal from './tableModal';
 
 const ReceiptComponent = ({title, peopleNamesArr}) => {
 
@@ -23,6 +24,7 @@ const ReceiptComponent = ({title, peopleNamesArr}) => {
 
   const peopleNamesString = peopleNamesArr.join(', ');
 
+
   return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
@@ -35,19 +37,21 @@ const ReceiptComponent = ({title, peopleNamesArr}) => {
             <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
           }
 
-          <Modal show={show} onHide={handleClose} keyboard={false} size="lg">
+          {/* <Modal show={show} onHide={handleClose} keyboard={false} size="lg">
             <Modal.Header closeButton>
               <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ReceiptBody id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr}/>
+              <ReceiptBody id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
             </Modal.Footer>
-          </Modal>
+          </Modal> */}
+
+          <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
         </Card.Body>
       </Card>
     );

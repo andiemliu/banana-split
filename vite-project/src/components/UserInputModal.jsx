@@ -85,11 +85,11 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
 
     return (
         <>
-            <Modal show={showSecond} onHide={onHideSecond}>
+            <Modal show={showSecond} onHide={onHideSecond} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>2. Enter Names</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
                     <div className='receiptNamesSeparator'>
                         <div className='receiptItems'>
                             <h3>Receipt Items</h3>
@@ -133,13 +133,14 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                         </div>
                     </div>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer style={{ position: 'sticky', bottom: 0, background: 'white' }}>
                     <Button variant="secondary" onClick={onHideSecond}>Close</Button>
                     <Button variant="primary" onClick={handleShowThirdModal}>Next</Button>
+                    {/* <Button variant="primary" onClick={handleShowThirdModal}>Create Card</Button> */}
                 </Modal.Footer>
             </Modal>
 
-            <TableModal showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
+            <TableModal title={"3. Assign Amounts For Each Person"} showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
         </>
         );
     };
