@@ -152,8 +152,8 @@ app.get('/api/getReceipt/:id', async (req, res) => {
 app.put('/api/storeSplitInput/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const { people, checkboxes } = req.body;
-    console.log("storeSplitInput", id, req.body);
+    const { checkedItems, peopleNamesArr } = req.body;
+    console.log("storeSplitInput", id, checkedItems, peopleNamesArr);
 
     // Connect the client to the server
     await client.connect();
@@ -162,19 +162,25 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
     // Reference a particular collection
     const col = db.collection('images');
     const objectId = new ObjectId(id);
-
-    // Find the document by id and update it
-    const updatedDocument = await col.findOneAndUpdate(
-      { _id: objectId },
-      { $push: { people }, $set: { checkboxes } },
-      { new: true }
-    );
-
-    console.log("updatedDoc", updatedDocument._id, updatedDocument.people, updatedDocument.checkboxes);
-    if (!updatedDocument) {
-      return res.status(404).json({ error: 'Receipt not found' });
+    // Find the document by ID
+    const doc = await col.findOne({ _id: objectId });
+    // Update the document
+    if (!doc.inputData) {
+      doc.inputData = {}; // If data is null, create a new data object
     }
-    res.json(updatedDocument);
+    if (!doc.inputData.people) {
+      doc.inputData.people = []; // If people is null, create a new people array
+    }
+    if (!doc.inputData.checkboxes) {
+      doc.inputData.checkboxes = {}; // If checkboxes is null, create a new checkboxes object
+    }
+
+    // Replace existing data with new values
+    doc.inputData.people = peopleNamesArr;
+    Object.assign(doc.inputData.checkboxes, checkedItems);
+    console.log("inpdata", doc.inputData);
+    // Save the updated document
+    const result = await col.replaceOne({ _id: objectId }, doc);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error store split table input' });

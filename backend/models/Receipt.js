@@ -9,14 +9,10 @@ const receiptSchema = new mongoose.Schema({
     type: JSON,
     required: true,
   },
-  people: {
-    type: [String],
-    required: false,
+  inputData: {
+    people: [String],
+    checkboxes: Object, 
   },
-  checkboxes: {
-    type: Object,
-    required: false,
-  }
 });
 
 const Receipt = mongoose.model('Receipt', receiptSchema);
