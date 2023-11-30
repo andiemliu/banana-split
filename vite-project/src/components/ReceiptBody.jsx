@@ -7,24 +7,23 @@ import PropTypes from 'prop-types';
 import './receiptBody.css';
 
 const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAmount, checkedItems, data }) => {
-  // const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  //  const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
+  //  const [loading, setLoading] = useState(true);
+  //  const [error, setError] = useState(null);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // Make a request to your backend API with the provided ID
-  //       const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-  //       console.log(response);
-        
+  //  useEffect(() => {
+  //    const fetchData = async () => {
+  //      try {
+  //        // Make a request to your backend API with the provided ID
+  //        const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);        
 
   //       // Parse the JSON response
-  //       console.log(response);
-  //       const lineItems = response.data.data.data.line_items;
+  //       console.log(response.data.data.inputData);
+  //       const checkedItems = response.data.data.inputData.checkboxes;
+  //       const peopleNamesArr = response.data.data.inputData.people;
 
   //       // Update state with the fetched data
-  //       setData(lineItems);
+  //       setInputData({ checkedItems, peopleNamesArr });
   //     } catch (error) {
   //       // Handle errors
   //       setError(error.message);
@@ -48,7 +47,7 @@ const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAm
 
   // if (!data) {
   //   return <p>No data found</p>;
-  // }
+  // }  
 
 
   // Render your component with the fetched data
@@ -71,7 +70,7 @@ const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAm
             {data.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td>{item.description} (${item.total})</td>
-                {peopleNamesArr?.map((person, personIndex) => (
+                {peopleNamesArr?.map((person, personIndex) => ( //inputData.peopleNamesArr
                   <td key={personIndex}>
                     <Form.Check
                       type="checkbox"
