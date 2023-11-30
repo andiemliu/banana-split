@@ -44,7 +44,7 @@ app.post('/api/storeImageUrl', async (req, res) => {
 
     // Create a new instance of the Image model
     const image = new Image({ imgUrl });
-    console.log(image);
+    //console.log(image);
 
     // Save the image to the database
     await col.insertOne(image);
@@ -137,7 +137,7 @@ app.get('/api/getReceipt/:id', async (req, res) => {
     // Find the document by ID
     const document = await col.findOne({ _id: objectId });
 
-    console.log(document);
+    //console.log(document);
     if (!document) {
       return res.status(404).json({ error: 'Receipt not found' });
     }
@@ -146,6 +146,38 @@ app.get('/api/getReceipt/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.put('/api/storeSplitInput/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { people, checkboxes } = req.body;
+    console.log("storeSplitInput", id, req.body);
+
+    // Connect the client to the server
+    await client.connect();
+    // Specify a database to access
+    const db = client.db(dbName);
+    // Reference a particular collection
+    const col = db.collection('images');
+    const objectId = new ObjectId(id);
+
+    // Find the document by id and update it
+    const updatedDocument = await col.findOneAndUpdate(
+      { _id: objectId },
+      { $push: { people }, $set: { checkboxes } },
+      { new: true }
+    );
+
+    console.log("updatedDoc", updatedDocument._id, updatedDocument.people, updatedDocument.checkboxes);
+    if (!updatedDocument) {
+      return res.status(404).json({ error: 'Receipt not found' });
+    }
+    res.json(updatedDocument);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error store split table input' });
   }
 });
 

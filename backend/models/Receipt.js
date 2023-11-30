@@ -8,6 +8,14 @@ const receiptSchema = new mongoose.Schema({
   data: {
     type: JSON,
     required: true,
+  },
+  people: {
+    type: [String],
+    required: false,
+  },
+  checkboxes: {
+    type: Object,
+    required: false,
   }
 });
 

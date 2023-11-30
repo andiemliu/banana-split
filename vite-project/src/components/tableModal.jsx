@@ -9,13 +9,20 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     // added
     // const [formData, setFormData] = useState();
     const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
-
     useEffect(() => {
-        console.log("After (inside useEffect)", formData);
-    
-        // Other actions you want to perform after the state update
-        onCardSave(formData);
-        onHideThird();
+        console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
+        const fetchData = async () => {
+            // Save checkedItems, peopleNamesArr to DB
+            const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
+            console.log(response);
+            const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
+            console.log("Save owed amts", owedAmounts);
+            axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
+            // Other actions you want to perform after the state update
+            onCardSave(formData);
+            onHideThird();
+        }
+        fetchData();
       }, [formData]);
 
     const handleSave = () => {
@@ -23,7 +30,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         console.log("Before", formData)
         setFormData((prevData) => (
             { ...prevData, title: "Receipt", people: peopleNamesArr }));
-        // console.log("after", formData);
+        console.log("after", formData);
         // onCardSave(formData);
         // onHideThird();
     };
@@ -40,9 +47,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
             
-
             // Parse the JSON response
-            console.log(response);
             const lineItems = response.data.data.data.line_items;
 
             // Update state with the fetched data
@@ -82,6 +87,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     };
 
     const calculateOwedAmount = (personIndex) => {
+         
         return data.reduce((total, item, itemIndex) => {
         const key = `${personIndex}-${itemIndex}`;
         const isChecked = checkedItems[key];
@@ -100,6 +106,8 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     
         return total + amountToAdd;
         }, 0).toFixed(2);
+        //console.log("calcOwedAmt", result);
+        //return result;
     };
 
     return (
