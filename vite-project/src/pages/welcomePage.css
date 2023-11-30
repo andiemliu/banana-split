@@ -3,10 +3,18 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: 15%;
+    padding-top: 13%;
+    padding-bottom: 6%;
+    font-weight: bold;
+}
+
+.firstDiv {
+    font-size: 17px;
 }
 
 .secondDiv {
     margin-top: 7px;
+    font-size: 17px;
 }
 
 .thirdDiv {
@@ -14,8 +22,9 @@
 }
 
 .fullWelcomePage {
-    background-image: url('../assets/welcomePageBackground.png');
+    background-image: url('../assets/bananaSplitBackgroundHigher.png');
     background-size: cover;
     min-width: 1200px;
     min-height: 100vh;
+    opacity: 0.85;
 }

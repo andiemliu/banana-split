@@ -6,7 +6,7 @@ const WelcomePage = () => {
         <div className="fullWelcomePage">
             <NavBarComponent page={0} onCardSave={null}></NavBarComponent>
             <div className="welcomeMessage">
-                <div>Welcome to BananaSplit – your go-to platform for hassle-free grocery splitting! Tired of the confusion and headaches that come with dividing grocery expenses among friends or roommates? Look no further. BananaSplit simplifies the process, ensuring fairness and transparency in every grocery bill split. With our intuitive calculator, effortlessly determine each person's share based on the items they picked. Say goodbye to complex calculations and disputes over who owes what. BananaSplit considers individual contributions, making it easy to see exactly how much each person owes and who should receive reimbursement.
+                <div className="firstDiv">Welcome to BananaSplit – your go-to platform for hassle-free grocery splitting! Tired of the confusion and headaches that come with dividing grocery expenses among friends or roommates? Look no further. BananaSplit simplifies the process, ensuring fairness and transparency in every grocery bill split. With our intuitive calculator, effortlessly determine each person's share based on the items they picked. Say goodbye to complex calculations and disputes over who owes what. BananaSplit considers individual contributions, making it easy to see exactly how much each person owes and who should receive reimbursement.
                 </div>
 
                 <div className="secondDiv">
