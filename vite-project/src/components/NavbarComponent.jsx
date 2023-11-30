@@ -38,8 +38,9 @@ const NavBarComponent = ({ page, onCardSave }) => {
       };
 
     const customLinkStyle = {
-        fontSize: '20px',
+        fontSize: '16px',
         paddingTop: 20,
+        textTransform: "uppercase",
     };
 
     return (
@@ -56,7 +57,7 @@ const NavBarComponent = ({ page, onCardSave }) => {
                             (<>
                             <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShowFirstModal} >Upload a Receipt</Button>
 
-                            <Modal show={showFirstModal} onHide={handleCloseFirstModal} backdrop="static" keyboard={false}>
+                            <Modal show={showFirstModal} onHide={handleCloseFirstModal} backdrop="static" keyboard={false} >
                                 <Modal.Header closeButton>
                                 <Modal.Title>1. Upload Receipt Here</Modal.Title>
                                 </Modal.Header>

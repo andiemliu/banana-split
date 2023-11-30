@@ -28,7 +28,7 @@ const ReceiptComponent = ({title, peopleNamesArr}) => {
   return (
       <Card style={{ width: '18rem' }}>
         <Card.Body>
-          <Card.Title>{title}</Card.Title>
+          <Card.Title style={{textTransform: "uppercase", fontSize:'18px'}}>{title}</Card.Title>
           {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
           <Card.Text>{peopleNamesString}</Card.Text>
           {title == "No Receipts Yet" ? 

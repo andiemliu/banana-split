@@ -105,7 +105,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     return (
         <>
         {title == "Receipt Card Created!" ? 
-            <Modal show={showThird} onHide={onHideThird} size="sm">
+            <Modal show={showThird} onHide={onHideThird} dialogClassName="modal-80w">
             <Modal.Header>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>

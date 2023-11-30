@@ -4,6 +4,7 @@
 
 .thirdDiv {
     margin-top: 25px;
+    font-style: italic;
 }
 
 .fullWelcomePage {
@@ -31,7 +32,6 @@
     padding: 15%;
     padding-top: 13%;
     padding-bottom: 6%;
-    font-weight: bold;
     position: relative; /* Ensure z-index works */
     z-index: 1; /* Place the text above the pseudo-element overlay */
 }
@@ -41,4 +41,9 @@
 .thirdDiv {
     font-size: 18px;
     opacity: 1;
+}
+
+.firstDiv,
+.secondDiv {
+    font-weight: bold;
 }
