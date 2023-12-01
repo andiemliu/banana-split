@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './receiptBody.css';
 
-const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAmount, checkedItems, data }) => {
+const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handleCheckboxChange, calculateOwedAmount, checkedItems, data }) => {
   //  const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
   //  const [loading, setLoading] = useState(true);
   //  const [error, setError] = useState(null);

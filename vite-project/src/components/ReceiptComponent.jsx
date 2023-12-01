@@ -13,6 +13,10 @@ const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [showInit, setShowInit] = useState(false);
+  const handleCloseInit = () => setShowInit(false);
+  const handleShowInit = () => setShowInit(true);
+
   // const [checkedItems, setCheckedItems] = useState({});
 
   // const handleCheckboxChange = (personIndex, itemIndex) => {
@@ -35,7 +39,7 @@ const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
           {title == "No Receipts Yet" ? 
             <p>Click Upload a Receipt above to get started!</p>
             : 
-            <Button variant="outline-warning" onClick={handleShow}>Receipt Overview</Button>
+            <Button variant="outline-warning" onClick={handleShowInit}>Receipt Overview</Button>
           }
 
           {/* <Modal show={show} onHide={handleClose} keyboard={false} size="lg">
@@ -52,7 +56,7 @@ const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
             </Modal.Footer>
           </Modal> */}
           {initialized ?
-            <InitializedTableModal title={"Initialized Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></InitializedTableModal>
+            <InitializedTableModal title={"Initialized Receipt Overview"} showThird={showInit} onHideThird={handleCloseInit} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleCloseInit} ></InitializedTableModal>
           :
             <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
           }
