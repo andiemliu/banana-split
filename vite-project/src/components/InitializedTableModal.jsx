@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
+const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
     // const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -32,36 +32,34 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     //    fetchData();
     //  }, [id]); // Only re-run the effect if the 'id' prop changes   
 
-
-
     // added
     // const [formData, setFormData] = useState();
-    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
-    useEffect(() => {
-        console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
-        const fetchData = async () => {
-            // Save checkedItems, peopleNamesArr to DB
-            const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-            console.log(response);
-            const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
-            console.log("Save owed amts", owedAmounts);
-            axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
-            // Other actions you want to perform after the state update
-            onCardSave(formData);
-            onHideThird();
-        }
-        fetchData();
-      }, [formData]);
+    // const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
+    // useEffect(() => {
+    //     console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
+    //     const fetchData = async () => {
+    //         // Save checkedItems, peopleNamesArr to DB
+    //         const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
+    //         console.log(response);
+    //         const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
+    //         console.log("Save owed amts", owedAmounts);
+    //         axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
+    //         // Other actions you want to perform after the state update
+    //         onCardSave(formData);
+    //         onHideThird();
+    //     }
+    //     fetchData();
+    //   }, [formData]);
 
-    const handleSave = () => {
-        // setFormData({ title: "Receipt" , people: peopleNamesArr });
-        console.log("Before", formData)
-        setFormData((prevData) => (
-            { ...prevData, title: "Receipt", people: peopleNamesArr }));
-        console.log("after", formData);
-        // onCardSave(formData);
-        // onHideThird();
-    };
+    // const handleSave = () => {
+    //     // setFormData({ title: "Receipt" , people: peopleNamesArr });
+    //     console.log("Before", formData)
+    //     setFormData((prevData) => (
+    //         { ...prevData, title: "Receipt", people: peopleNamesArr }));
+    //     console.log("after", formData);
+    //     // onCardSave(formData);
+    //     // onHideThird();
+    // };
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -77,9 +75,11 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             
             // Parse the JSON response
             const lineItems = response.data.data.data.line_items;
+            const checkedItems = response.data.data.inputData.checkboxes;
 
             // Update state with the fetched data
             setData(lineItems);
+            setCheckedItems(checkedItems);
         } catch (error) {
             // Handle errors
             setError(error.message);
@@ -148,15 +148,15 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHideThird}>Close</Button>
-                <Button variant="primary" onClick={handleSave}>Save</Button>
+                {/* <Button variant="primary" onClick={handleSave}>Save</Button> */}
             </Modal.Footer>
         </Modal>
     )
 }
 
-TableModal.propTypes = {
+InitializedTableModal.propTypes = {
     onCardSave: PropTypes.func,
     peopleNamesArr: PropTypes.array
   };
 
-export default TableModal;
+export default InitializedTableModal;
