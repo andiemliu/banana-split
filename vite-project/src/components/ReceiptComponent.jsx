@@ -58,7 +58,8 @@ const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
           {initialized ?
             <InitializedTableModal title={"Initialized Receipt Overview"} showThird={showInit} onHideThird={handleCloseInit} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleCloseInit} ></InitializedTableModal>
           :
-            <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
+            // <p>Nothing</p>  
+          <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
           }
         </Card.Body>
       </Card>

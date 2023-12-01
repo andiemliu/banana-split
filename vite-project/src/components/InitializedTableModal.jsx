@@ -34,38 +34,71 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
 
     // added
     // const [formData, setFormData] = useState();
-    // const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
-    // useEffect(() => {
-    //     console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
-    //     const fetchData = async () => {
-    //         // Save checkedItems, peopleNamesArr to DB
-    //         const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-    //         console.log(response);
-    //         const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
-    //         console.log("Save owed amts", owedAmounts);
-    //         axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
-    //         // Other actions you want to perform after the state update
-    //         onCardSave(formData);
-    //         onHideThird();
-    //     }
-    //     fetchData();
-    //   }, [formData]);
+    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
+    useEffect(() => {
+        console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
+        const fetchData = async () => {
+            const owedAmounts = peopleNamesArr.map((person, personIndex) => (person, calculateOwedAmount(personIndex)));
+            console.log("newest Save owed amts", owedAmounts);
+            const collector = peopleNamesArr[peopleNamesArr.length - 1].replace(/\s*\([^)]*\)\s*/, '');
+            
+            for (let i = 0; i < peopleNamesArr.length; i++) {
+                const person = peopleNamesArr[i];
+                const amount = owedAmounts[i];
+                console.log("person, amount", person, amount);
+                await axios.put(`http://localhost:3001/api/updateOwedAmount/`, { person, collector, amount });
+            }
+            // Update new owed amounts to DB
+            // axios.put(`http://localhost:3001/api/updateOwedAmounts/${id}`, { owedAmounts })
 
-    // const handleSave = () => {
-    //     // setFormData({ title: "Receipt" , people: peopleNamesArr });
-    //     console.log("Before", formData)
-    //     setFormData((prevData) => (
-    //         { ...prevData, title: "Receipt", people: peopleNamesArr }));
-    //     console.log("after", formData);
-    //     // onCardSave(formData);
-    //     // onHideThird();
-    // };
+            // Other actions you want to perform after the state update
+            onCardSave(formData);
+            onHideThird();
+        }
+        fetchData();
+      }, [formData]);
+
+    const handleSave = () => {
+        // setFormData({ title: "Receipt" , people: peopleNamesArr });
+        console.log("Before", formData)
+        setFormData((prevData) => (
+            { ...prevData, title: "Receipt", people: peopleNamesArr }));
+        console.log("after", formData);
+        // onCardSave(formData);
+        // onHideThird();
+    };
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [checkedItems, setCheckedItems] = useState({});
 
+    const calculateOwedAmount = (personIndex) => {
+         if (!data) {
+            return 0;
+         }
+        return data.reduce((total, item, itemIndex) => {
+        const key = `${personIndex}-${itemIndex}`;
+        const isChecked = checkedItems[key];
+    
+        // Count the number of people who checked this checkbox
+        const numberOfPeopleChecked = peopleNamesArr.reduce(
+            (count, _, currentIndex) =>
+            checkedItems[`${currentIndex}-${itemIndex}`] ? count + 1 : count,
+            0
+        );
+    
+        // Calculate the owed amount based on the number of people checked
+        const amountToAdd = isChecked && numberOfPeopleChecked !== 0 && personIndex != peopleNamesArr.length - 1
+            ? item.total / numberOfPeopleChecked
+            : 0;
+        
+        return total + amountToAdd;
+        }, 0).toFixed(2);
+
+        //console.log("calcOwedAmt", result);
+        //return result;
+    };
     useEffect(() => {
         let isMounted = true;
 
@@ -128,29 +161,6 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         });
     };
 
-    const calculateOwedAmount = (personIndex) => {
-         
-        return data.reduce((total, item, itemIndex) => {
-        const key = `${personIndex}-${itemIndex}`;
-        const isChecked = checkedItems[key];
-    
-        // Count the number of people who checked this checkbox
-        const numberOfPeopleChecked = peopleNamesArr.reduce(
-            (count, _, currentIndex) =>
-            checkedItems[`${currentIndex}-${itemIndex}`] ? count + 1 : count,
-            0
-        );
-    
-        // Calculate the owed amount based on the number of people checked
-        const amountToAdd = isChecked && numberOfPeopleChecked !== 0 && personIndex != peopleNamesArr.length - 1
-            ? item.total / numberOfPeopleChecked
-            : 0;
-    
-        return total + amountToAdd;
-        }, 0).toFixed(2);
-        //console.log("calcOwedAmt", result);
-        //return result;
-    };
     console.log("checkedItems before pass to receiptbody", checkedItems);
 
     return (
@@ -163,7 +173,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHideThird}>Close</Button>
-                <Button variant="primary" onClick={onCardSave}>Save</Button>
+                <Button variant="primary" onClick={handleSave}>Save</Button>
             </Modal.Footer>
         </Modal>
     )

@@ -187,6 +187,32 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
   }
 });
 
+const owedAmounts = {};
+
+app.put('/api/updateOwedAmount/', async (req, res) => {
+  try {
+    const { person, collector, amount } = req.body;
+    console.log("updateOwedAmount", person, collector, amount);
+    const key = `${person}-${collector}`; // person owes collector
+    if (!owedAmounts[key]) {
+      owedAmounts[key] = 0;
+    }
+    owedAmounts[key] += amount;
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error update owed amount' });
+  }
+});
+
+app.get('/api/getOwedAmounts/', async (req, res) => {
+  try {
+    res.json({ data: owedAmounts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error get owed amounts' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

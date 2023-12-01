@@ -15,7 +15,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
             const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
-            console.log("Save owed amts", owedAmounts);
+            console.log("old Save owed amts", owedAmounts);
             axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
             // Other actions you want to perform after the state update
             onCardSave(formData);
