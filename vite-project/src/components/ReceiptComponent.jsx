@@ -5,8 +5,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReceiptBody from './ReceiptBody';
 import TableModal from './tableModal';
+import InitializedTableModal from './InitializedTableModal';
 
-const ReceiptComponent = ({title, peopleNamesArr}) => {
+const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -50,14 +51,18 @@ const ReceiptComponent = ({title, peopleNamesArr}) => {
               </Button>
             </Modal.Footer>
           </Modal> */}
-
-          <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
+          {initialized ?
+            <InitializedTableModal title={"Initialized Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></InitializedTableModal>
+          :
+            <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
+          }
         </Card.Body>
       </Card>
     );
 }
 
 ReceiptComponent.propTypes = {
+  initialized: PropTypes.bool,
   title: PropTypes.string,
   // content: PropTypes.array,
   peopleNamesArr: PropTypes.array

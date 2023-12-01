@@ -3,8 +3,9 @@ import  { useState } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
-function ImageUpload() {
+const ImageUpload = ({ onImageUpload }) => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [imageId, setStoredId] = useState(null);
   const imgbbToken = import.meta.env.VITE_REACT_APP_IMGBB_TOKEN;
 
   // Handle file select by saving image to state
@@ -32,6 +33,12 @@ function ImageUpload() {
       
           // Access the stored ID
           const storedId = responseData.insertedId;
+
+          // Set the stored ID to state
+          setStoredId(storedId);
+
+          // Pass the image ID to the parent component NavbarComponent
+          onImageUpload(storedId);
       
           console.log('Data stored successfully with ID:', storedId);
         // Send API request to store imgUrl to MongoDB

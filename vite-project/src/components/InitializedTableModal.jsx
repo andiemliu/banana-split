@@ -67,8 +67,12 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
     const [checkedItems, setCheckedItems] = useState({});
 
     useEffect(() => {
+        let isMounted = true;
+
         const fetchData = async () => {
+
         try {
+            await new Promise(resolve => setTimeout(resolve, 1000));
             // Make a request to your backend API with the provided ID
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
@@ -76,13 +80,20 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
             // Parse the JSON response
             const lineItems = response.data.data.data.line_items;
             const checkedItems = response.data.data.inputData.checkboxes;
-
-            // Update state with the fetched data
-            setData(lineItems);
-            setCheckedItems(checkedItems);
+            console.log("checkeditems in Initializedtablemodal:", checkedItems);
+            if (isMounted) {
+                // Update state with the fetched data
+                setData(lineItems);
+                setCheckedItems(checkedItems);
+            }
         } catch (error) {
             // Handle errors
-            setError(error.message);
+            if (isMounted) {
+
+                setError(error.message);
+                setLoading(false);
+
+            }
         } finally {
             // Update loading state regardless of success or failure
             setLoading(false);
@@ -91,6 +102,9 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
 
         // Call the fetchData function when the component mounts
         fetchData();
+        return () => {
+            isMounted = false;
+          };
     }, [id]); // Only re-run the effect if the 'id' prop changes
 
     if (loading) {
@@ -137,6 +151,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         //console.log("calcOwedAmt", result);
         //return result;
     };
+    console.log("checkedItems before pass to receiptbody", checkedItems);
 
     return (
         <Modal show={showThird} onHide={onHideThird} size="lg">

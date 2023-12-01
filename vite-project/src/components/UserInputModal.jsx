@@ -47,6 +47,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
         const fetchData = async () => {
             try {
                 // Make a request to your backend API with the provided ID
+                console.log(id)
                 const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
                 console.log(response);
                 

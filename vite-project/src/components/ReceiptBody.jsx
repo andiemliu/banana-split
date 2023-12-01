@@ -48,7 +48,7 @@ const ReceiptBody = ({ id, peopleNamesArr, handleCheckboxChange, calculateOwedAm
   // if (!data) {
   //   return <p>No data found</p>;
   // }  
-
+  console.log("checkedITems in receipt body", checkedItems);  
 
   // Render your component with the fetched data
   return (

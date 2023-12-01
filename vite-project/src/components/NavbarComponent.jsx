@@ -5,11 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useState } from 'react';
 import './navBar.css';
-import UploadPage from './UploadPage';
+import ImageUpload from './ImageUpload';
 import { Link } from 'react-router-dom';
 import UserInputModal from './UserInputModal';
 
 const NavBarComponent = ({ page, onCardSave }) => {
+    const [id, setId] = useState('6555a1f2bea95e6d64c85140'); 
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
@@ -19,6 +20,9 @@ const NavBarComponent = ({ page, onCardSave }) => {
     const handleShowFirstModal = () => setShowFirstModal(true);
     const handleCloseFirstModal = () => setShowFirstModal(false);
 
+    const handleImageUpload = (imageId) => {
+        setId(imageId);
+    };
 
     const handleShowSecondModal = () => {
         setShowFirstModal(false);
@@ -61,7 +65,8 @@ const NavBarComponent = ({ page, onCardSave }) => {
                                 <Modal.Title>1. Upload Receipt Here</Modal.Title>
                                 </Modal.Header>
                                 <Modal.Body>
-                                    <UploadPage />
+                                    <h2 className="uploadFile">Select file to upload</h2>
+                                    <ImageUpload onImageUpload={handleImageUpload}/>
                                 </Modal.Body>
                                 <Modal.Footer>
                                 <Button variant="secondary" onClick={handleCloseFirstModal}>
@@ -73,7 +78,7 @@ const NavBarComponent = ({ page, onCardSave }) => {
                                 </Modal.Footer>
                             </Modal>
 
-                            <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={'6555a1f2bea95e6d64c85140'} onCardSave={onCardSave} />
+                            <UserInputModal showSecond={showSecondModal} onHideSecond={handleCloseSecondModal} showThird={showThirdModal} onHideThird={handleCloseThirdModal} handleShowThirdModal={handleShowThirdModal} id={id} onCardSave={onCardSave} />
                         </>)
                             : <div></div>
                         }
