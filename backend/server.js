@@ -177,7 +177,7 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
 
     // Replace existing data with new values
     doc.inputData.people = peopleNamesArr;
-    Object.assign(doc.inputData.checkboxes, checkedItems);
+    doc.inputData.checkboxes = checkedItems;
     console.log("inpdata", doc.inputData);
     // Save the updated document
     const result = await col.replaceOne({ _id: objectId }, doc);

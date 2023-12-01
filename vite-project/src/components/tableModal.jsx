@@ -3,8 +3,37 @@ import { Modal, Button } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import InitialInputTable from "./initialInputTable";
 
 const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
+    // const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         // Make a request to your backend API with the provided ID
+    //         const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);        
+   
+    //        // Parse the JSON response
+    //        console.log(response.data.data.inputData);
+    //        const checkedItems = response.data.data.inputData.checkboxes;
+    //        //const peopleNamesArr = response.data.data.inputData.people;
+   
+    //        // Update state with the fetched data
+    //        setInputData({ checkedItems, peopleNamesArr });
+    //      } catch (error) {
+    //        // Handle errors
+    //        setError(error.message);
+    //      } finally {
+    //        // Update loading state regardless of success or failure
+    //        setLoading(false);
+    //      }
+    //    };
+   
+    //    // Call the fetchData function when the component mounts
+    //    fetchData();
+    //  }, [id]); // Only re-run the effect if the 'id' prop changes   
+
+
 
     // added
     // const [formData, setFormData] = useState();
@@ -116,7 +145,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ReceiptBody id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
+                <InitialInputTable id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></InitialInputTable>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHideThird}>Close</Button>
