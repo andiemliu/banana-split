@@ -9,7 +9,7 @@ import UploadPage from './UploadPage';
 import { Link } from 'react-router-dom';
 import UserInputModal from './UserInputModal';
 
-const NavBarComponent = ({ page, onCardSave }) => {
+const NavBarComponent = ({ page, onCardSave, handlePageClick }) => {
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
@@ -47,12 +47,12 @@ const NavBarComponent = ({ page, onCardSave }) => {
         <div>
             <Navbar fixed="top" bg="light" className='navBar' expand="lg">
                 <Container className='container'>
-                    <Navbar.Brand as={Link} to="/" className='brand' style={customBrandStyle}>BananaSplit</Navbar.Brand>
+                    <Navbar.Brand onClick={handlePageClick} as={Link} to="/" className='brand' style={customBrandStyle}>BananaSplit</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/dashboard" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
-                        <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
+                        <Nav.Link onClick={handlePageClick} as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
                         {(page == 1) ? 
                             (<>
                             <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShowFirstModal} >Upload a Receipt</Button>

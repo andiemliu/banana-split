@@ -4,7 +4,7 @@ import PersonComponent from "../components/PersonComponent";
 import './profilesPage.css';
 
 
-const ProfilesPage = ({ numberOfPeople, handleCardSave }) => {
+const ProfilesPage = ({ numberOfPeople }) => {
 
     const displayedProfiles = Array.from({ length: numberOfPeople }, (_, index) => ({
         name: `Profile ${index + 1}`,
@@ -13,7 +13,7 @@ const ProfilesPage = ({ numberOfPeople, handleCardSave }) => {
 
     return (
         <div className='fullProfilesPage'>
-            <NavBarComponent page={2} onCardSave={handleCardSave}></NavBarComponent>
+            <NavBarComponent page={2} onCardSave={null}></NavBarComponent>
             <h1 className="yourProfiles">Your Profiles</h1>
             <div className="separate1">
                 {displayedProfiles.map((profile, index) => (

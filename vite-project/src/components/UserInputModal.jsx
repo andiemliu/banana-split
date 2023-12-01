@@ -155,7 +155,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 <Modal.Footer style={{ position: 'sticky', bottom: 0, background: 'white' }}>
                     <Button variant="secondary" onClick={onHideSecond}>Close</Button>
                     {/* <Button variant="primary" onClick={handleShowThirdModal}>Next</Button> */}
-                    <Button variant="primary" onClick={handleShowThirdModal}>Create Card</Button>
+                    <Button variant="primary" onClick={handleShowThirdModal} disabled={!payerName && peopleNames.length === 0}>Create Card</Button>
                 </Modal.Footer>
             </Modal>
 

@@ -12,10 +12,12 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
 
     useEffect(() => {
         console.log("After (inside useEffect)", formData);
-    
-        // Other actions you want to perform after the state update
-        onCardSave(formData);
-        onHideThird();
+        console.log(peopleNamesArr)
+        if (peopleNamesArr[0] != ' (Payer)') {
+            // Other actions you want to perform after the state update
+            onCardSave(formData);
+            onHideThird();
+        }
       }, [formData]);
 
     const handleSave = () => {

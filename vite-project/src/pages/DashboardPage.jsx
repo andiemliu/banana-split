@@ -3,6 +3,7 @@ import ReceiptComponent from "../components/receiptComponent";
 import './dashboardPage.css';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useCallback } from "react";
+import { useCardContext } from "../CardContext";
 
 const DashboardPage = () => {
 
@@ -11,21 +12,32 @@ const DashboardPage = () => {
     //     content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
     //   }));
 
-      const [dashboardCards, setDashboardCards] = useState([]);
+    const { dashboardCards, handleCardSave, setDashboardCards } = useCardContext();
 
-      const handleCardSave = useCallback(
-        (data) => {
-          setDashboardCards((prevData) => [...prevData, data]);
-          console.log(dashboardCards)
-        },
-        [setDashboardCards]
-      );
+    // const [dashboardCards, setDashboardCards] = useState([]);
 
-      useEffect(() => {
-        console.log('Dashboard data updated:', dashboardCards);
-      }, [dashboardCards]);
+    // const handleCardSave = useCallback(
+    // (data) => {
+    //     setDashboardCards((prevData) => [...prevData, data]);
+    //     console.log(dashboardCards)
+    // },
+    // [setDashboardCards]
+    // );
 
-      const noFirstCardArr = dashboardCards.slice(1);
+    useEffect(() => {
+    console.log('Dashboard data updated:', dashboardCards);
+    }, [dashboardCards]);
+
+    const noFirstCardArr = dashboardCards.slice(1);
+
+    const handlePageClick = () => {
+        // Remove the last card when the dashboard page is clicked
+        if (dashboardCards.length > 0) {
+          const updatedCards = dashboardCards.slice(0, -1);
+          setDashboardCards(updatedCards);
+          console.log('Last card removed:', updatedCards);
+        }
+      };
     
     return (
         <div className="fullDashboardPage">
