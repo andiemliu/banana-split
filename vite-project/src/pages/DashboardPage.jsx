@@ -3,6 +3,7 @@ import ReceiptComponent from "../components/receiptComponent";
 import './dashboardPage.css';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useCallback } from "react";
+import { useCardContext } from "../CardContext";
 
 const DashboardPage = () => {
 
@@ -11,14 +12,16 @@ const DashboardPage = () => {
     //     content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
     //   }));
 
-      const [dashboardCards, setDashboardCards] = useState([]);
+      const { dashboardCards, handleCardSave, setDashboardCards } = useCardContext();
 
-      const handleCardSave = useCallback(
-        (data) => {
-          setDashboardCards((prevData) => [...prevData, data]);
-        },
-        [setDashboardCards]
-      );
+    //   const [dashboardCards, setDashboardCards] = useState([]);
+
+    //   const handleCardSave = useCallback(
+    //     (data) => {
+    //       setDashboardCards((prevData) => [...prevData, data]);
+    //     },
+    //     [setDashboardCards]
+    //   );
 
       useEffect(() => {
         console.log('Dashboard data updated:', dashboardCards);

@@ -5,7 +5,7 @@ import LineItemComponent from './LineItemComponent';
 import { FormControl, ListGroup } from 'react-bootstrap';
 import TableModal from './tableModal';
 import './userInputModal.css';
-
+import Table from 'react-bootstrap/Table';
 
 const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id, onCardSave }) => {
 
@@ -94,11 +94,26 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                     <div className='receiptNamesSeparator'>
                         <div className='receiptItems'>
                             <h3>Receipt Items</h3>
-                            {data.map((lineItem, index) => (
+
+                            {/* {data.map((lineItem, index) => (
                                 <div key={index} className='itemBlock'>
                                     <LineItemComponent key={index} lineItem={lineItem} />
                                 </div>
-                            ))}
+                            ))} */}
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.map((lineItem, index) => (
+                                    <LineItemComponent key={index} lineItem={lineItem} />
+                                    ))}
+                                </tbody>
+                            </Table>
                         </div>
                         <div>
                             <h3>Payer</h3>

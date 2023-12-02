@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './pages/dashboardPage';
 import ProfilesPage from './pages/profilesPage';
 import WelcomePage from './pages/WelcomePage';
+import { CardProvider } from './CardContext';
 
 function App() {
 
@@ -25,25 +26,28 @@ function App() {
   // const noFirstCardArr = dashboardCards.slice(1);
 
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-        {/* <Route
-            path="/"
-            element={<DashboardPage page={1} handleCardSave={handleCardSave} dashboardCards={dashboardCards} noFirstCardArr={noFirstCardArr} />}
-          /> */}
-          <Route
-            path="/dashboard"
-            element={<DashboardPage page={1} />}
-          />
-          {/* <Route path="/profiles" element={<ProfilesPage numberOfPeople={4} handleCardSave={handleCardSave} />} /> */}
-          <Route path="/profiles" element={<ProfilesPage page={2} numberOfPeople={4} />} />
-        </Routes>
-      </BrowserRouter>
-      {/* <NavBarComponent></NavBarComponent> */}
-    </>
-  )
+    // <>
+    //   <BrowserRouter>
+    //     <Routes>
+    //       <Route path="/" element={<WelcomePage />} />
+    //       <Route
+    //         path="/dashboard"
+    //         element={<DashboardPage page={1} />}
+    //       />
+    //       <Route path="/profiles" element={<ProfilesPage page={2} numberOfPeople={4} />} />
+    //     </Routes>
+    //   </BrowserRouter>
+    // </>
+      <CardProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/dashboard" element={<DashboardPage page={1} />} />
+            <Route path="/profiles" element={<ProfilesPage numberOfPeople={4} />} />
+          </Routes>
+        </BrowserRouter>
+      </CardProvider>
+    );
 }
 
 // const root = ReactDOM.createRoot(document.getElementById('root'));
