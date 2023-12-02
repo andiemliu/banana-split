@@ -15,9 +15,14 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             // Save checkedItems, peopleNamesArr to DB
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
-            const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
-            console.log("Save owed amts", owedAmounts);
             axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
+
+            try {
+                const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
+                console.log("Save owed amts", owedAmounts);    
+            } catch (error) {
+                console.log("owedAmounts not initialized yet", error);
+            }
             // Other actions you want to perform after the state update
             onCardSave(formData);
             onHideThird();
