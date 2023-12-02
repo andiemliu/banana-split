@@ -45,6 +45,8 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
 
     useEffect(() => {
         const fetchData = async () => {
+            if (id){
+                console.log("my id is", id);
             try {
                 // Make a request to your backend API with the provided ID
                 console.log(id)
@@ -67,6 +69,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 // Update loading state regardless of success or failure
                 setLoading(false);
             }
+        }
         };
 
         // Call the fetchData function when the component mounts
@@ -74,7 +77,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
     }, [id]); // Only re-run the effect if the 'id' prop changes
 
     if (loading) {
-        return <p>Loading...</p>;
+        return ;//<p>Loading...</p>;
     }
 
     if (error) {

@@ -43,7 +43,7 @@ function App() {
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/dashboard" element={<DashboardPage page={1} />} />
-            <Route path="/profiles" element={<ProfilesPage numberOfPeople={4} />} />
+            <Route path="/profiles" element={<ProfilesPage numberOfPeople={1} />} />
           </Routes>
         </BrowserRouter>
       </CardProvider>

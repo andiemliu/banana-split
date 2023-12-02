@@ -8,7 +8,8 @@ const PersonComponent = ({name, others}) => {
             <Card.Body>
             <Card.Title>{name}</Card.Title>
             {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
-            <Card.Text>{others}</Card.Text>
+            <Card.Text>{others.map((item, index) => (
+                <p key={index}>{item}</p>))}</Card.Text>
             </Card.Body>
         </Card>
     )

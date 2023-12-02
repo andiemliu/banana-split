@@ -74,6 +74,10 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         try {
             await new Promise(resolve => setTimeout(resolve, 500));
             // Make a request to your backend API with the provided ID
+            if (!id) {
+                console.log("no id!!");
+                return;
+            }
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
             

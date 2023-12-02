@@ -12,14 +12,30 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     useEffect(() => {
         console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
         const fetchData = async () => {
+            if (!id){
+                return; 
+            }
             // Save checkedItems, peopleNamesArr to DB
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
             axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
 
             try {
+                const id = '656bb44e730a0709c0107c00'
+                const username = 'andieliu'
                 const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
                 console.log("Save owed amts", owedAmounts);    
+
+                // Save owedAmounts to DB for each person owes collector amount
+                const collector = peopleNamesArr[peopleNamesArr.length - 1].replace(/\s*\([^)]*\)\s*/, '');
+                console.log("people",peopleNamesArr);
+                for (let i = 0; i < peopleNamesArr.length-1; i++) {
+                    const person = peopleNamesArr[i];
+                    const amount = owedAmounts[i];
+                    console.log("person, amount:", person, amount);
+                    await axios.put(`http://localhost:3001/api/updateOwedAmount/`, { id, username, person, collector, amount });
+                }
+
             } catch (error) {
                 console.log("owedAmounts not initialized yet", error);
             }
@@ -28,7 +44,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             onHideThird();
         }
         fetchData();
-      }, [formData]);
+      }, [formData, id]);
 
     const handleSave = () => {
         // setFormData({ title: "Receipt" , people: peopleNamesArr });
