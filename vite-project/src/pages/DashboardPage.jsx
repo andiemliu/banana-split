@@ -49,8 +49,8 @@ const DashboardPage = () => {
                         <ReceiptComponent title={card.title} content={card.content} peopleNamesArr={peopleNamesArr}></ReceiptComponent>
                     </div>
                 ))} */}
-                {dashboardCards?.length > 1 ? (
-                    noFirstCardArr?.map((card, index) => (
+                {dashboardCards?.length > 0 ? (
+                    dashboardCards?.map((card, index) => (
                         <div key={index} className="individualReceipts">
                             <ReceiptComponent title={card.title + " " + (index + 1).toString()} peopleNamesArr={card.people}></ReceiptComponent>
                         </div>
