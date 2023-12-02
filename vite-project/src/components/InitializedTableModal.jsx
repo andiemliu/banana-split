@@ -108,7 +108,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
     }, [id]); // Only re-run the effect if the 'id' prop changes
 
     if (loading) {
-        return <p>Loading...</p>;
+        return // <p>Loading...</p>;
     }
 
     if (error) {

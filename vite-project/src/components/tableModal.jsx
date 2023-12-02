@@ -7,7 +7,8 @@ import axios from 'axios';
 const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
     // added
     // const [formData, setFormData] = useState();
-    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
+    // Create receipt?
+    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr, id: id });
     useEffect(() => {
         console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
         const fetchData = async () => {
@@ -28,7 +29,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         // setFormData({ title: "Receipt" , people: peopleNamesArr });
         console.log("Before", formData)
         setFormData((prevData) => (
-            { ...prevData, title: "Receipt", people: peopleNamesArr }));
+            { ...prevData, title: "Receipt", people: peopleNamesArr, id: id }));
         console.log("after", formData);
         // onCardSave(formData);
         // onHideThird();
@@ -45,7 +46,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         try {
             // Make a request to your backend API with the provided ID
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-            console.log(response);
+            console.log("second get receipt", response);
             
             // Parse the JSON response
             const lineItems = response.data.data.data.line_items;
@@ -121,7 +122,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         //console.log("calcOwedAmt", result);
         //return result;
     };
-
+    console.log("hi my id", id);
     return (
         <Modal show={showThird} onHide={onHideThird} size="lg">
             <Modal.Header>

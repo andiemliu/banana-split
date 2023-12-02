@@ -7,7 +7,7 @@ import ReceiptBody from './ReceiptBody';
 import TableModal from './tableModal';
 import InitializedTableModal from './InitializedTableModal';
 
-const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
+const ReceiptComponent = ({initialized, id, title, peopleNamesArr}) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -55,11 +55,13 @@ const ReceiptComponent = ({initialized, title, peopleNamesArr}) => {
               </Button>
             </Modal.Footer>
           </Modal> */}
-          {initialized ?
-            <InitializedTableModal title={"Initialized Receipt Overview"} showThird={showInit} onHideThird={handleCloseInit} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleCloseInit} ></InitializedTableModal>
+          {title != "No Receipts Yet" ?
+                      // <TableModal title={"Initialized Receipt Overview"} showThird={showInit} onHideThird={handleCloseInit} id={id} peopleNamesArr={peopleNamesArr} onCardSave={handleCloseInit}></TableModal>
+
+            <InitializedTableModal title={"Initialized Receipt Overview"} showThird={showInit} onHideThird={handleCloseInit} id={id} peopleNamesArr={peopleNamesArr} onCardSave={handleCloseInit} ></InitializedTableModal>
           :
-            <TableModal title={"Receipt Overview"} showThird={show} onHideThird={setShow} id={'6555a1f2bea95e6d64c85140'} peopleNamesArr={peopleNamesArr} onCardSave={handleClose} ></TableModal>
-          }
+          <p>Click Upload a Receipt above to get started!</p>
+        }
         </Card.Body>
       </Card>
     );
