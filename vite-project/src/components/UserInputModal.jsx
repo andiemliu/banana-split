@@ -54,10 +54,12 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
 
                 // Parse the JSON response
                 console.log(response);
+                const data = response.data.data.data;
                 const lineItems = response.data.data.data.line_items;
 
                 // Update state with the fetched data
-                setData(lineItems);
+                setData(data);
+                // setData(lineItems);
             } catch (error) {
                 // Handle errors
                 setError(error.message);
@@ -109,7 +111,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((lineItem, index) => (
+                                    {data.line_items.map((lineItem, index) => (
                                     <LineItemComponent key={index} lineItem={lineItem} />
                                     ))}
                                 </tbody>

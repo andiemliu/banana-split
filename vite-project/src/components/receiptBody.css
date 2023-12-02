@@ -11,6 +11,17 @@
 
 .receiptTable {
     margin-right: 30px;
+    margin-top: 15px;
+}
+
+.receiptHeader p {
+    font-size: 18px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.receiptHeader p:last-child{
+    margin-bottom: 20px;
 }
 
 .last-div {
@@ -26,6 +37,7 @@
 
 .totalToPayer {
     font-size: 25px;
+    font-weight: bold;
 }
 
 .amount {

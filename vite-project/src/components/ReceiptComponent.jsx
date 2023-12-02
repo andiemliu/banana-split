@@ -37,7 +37,7 @@ const ReceiptComponent = ({initialized, id, title, peopleNamesArr}) => {
           {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
           <Card.Text>{peopleNamesString}</Card.Text>
           {title == "No Receipts Yet" ? 
-            <p>Click Upload a Receipt above to get started!</p>
+            <p></p>
             : 
             <Button variant="outline-warning" onClick={handleShowInit}>Receipt Overview</Button>
           }

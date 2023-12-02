@@ -96,14 +96,20 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
   //   return <p>No data found</p>;
   // }  
   // console.log("checkedITems in receipt body", inputData);  
-
+  console.log("receipt body !!! data", data);
   // Render your component with the fetched data
   return (
     <div className='modalBody'>
       {/* {data.map((lineItem, index) => (
         <LineItemComponent key={index} lineItem={lineItem} />
       ))} */}
+      
       <div className='receiptTable'>
+        <div className='receiptHeader'>
+          <p>${data.total} spent at {data.vendor.name} </p>
+          <p>Date: {data.date}</p>
+          <p className='add-margin'>Location: {data.vendor.address}</p>
+        </div>
         <Table hover>
           <thead>
             <tr>
@@ -114,7 +120,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
             </tr>
           </thead>
           <tbody>
-            {data.map((item, itemIndex) => (
+            {data.line_items.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td>{item.description} (${item.total})</td>
                 {peopleNamesArr?.map((person, personIndex) => ( //inputData.peopleNamesArr
@@ -199,7 +205,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
 ReceiptBody.propTypes = {
   id: PropTypes.string,
   peopleNamesArr: PropTypes.array,
-  data: PropTypes.array
+  data: PropTypes.object
 };
 
 export default ReceiptBody;

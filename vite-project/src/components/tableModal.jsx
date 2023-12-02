@@ -49,10 +49,12 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
             console.log("second get receipt", response);
             
             // Parse the JSON response
+            const data = response.data.data.data;
             const lineItems = response.data.data.data.line_items;
 
             // Update state with the fetched data
-            setData(lineItems);
+            setData(data);
+            // setData(lineItems);
         } catch (error) {
             // Handle errors
             setError(error.message);
@@ -82,7 +84,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         setCheckAll(newCheckAllState);
     
         const newCheckedItems = {};
-        data.forEach((item, itemIndex) => {
+        data.line_items.forEach((item, itemIndex) => {
             peopleNamesArr.forEach((person, personIndex) => {
                 newCheckedItems[`${personIndex}-${itemIndex}`] = newCheckAllState;
             });        
@@ -101,7 +103,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
 
     const calculateOwedAmount = (personIndex) => {
          
-        return data.reduce((total, item, itemIndex) => {
+        return data.line_items.reduce((total, item, itemIndex) => {
         const key = `${personIndex}-${itemIndex}`;
         const isChecked = checkedItems[key];
     
@@ -122,7 +124,8 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         //console.log("calcOwedAmt", result);
         //return result;
     };
-    console.log("hi my id", id);
+    console.log("hi my id ", id);
+    console.log("hi my data", data);
     return (
         <Modal show={showThird} onHide={onHideThird} size="lg">
             <Modal.Header>
