@@ -115,7 +115,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                                 </tbody>
                             </Table>
                         </div>
-                        <div>
+                        <div className='inputSection'>
                             <h3>Payer</h3>
                             <FormControl
                                 type="text"
@@ -132,6 +132,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                                 onKeyDown={handleEnterPress}
                                 placeholder="Press Enter to add a new name"
                                 className="otherInput"
+                                style={{ width: '250px' }}
                             />
                             <ListGroup>
                                 {peopleNames.map((person, index) => (

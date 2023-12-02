@@ -37,13 +37,23 @@ const NavBarComponent = ({ page, onCardSave }) => {
     const handleCloseSecondModal = () => setShowSecondModal(false);
     const handleCloseThirdModal = () => setShowThirdModal(false);
 
+    // const customBrandStyle = {
+    //     fontSize: '40px',
+    //   };
+
+    // const customLinkStyle = {
+    //     fontSize: '20px',
+    //     paddingTop: 20,
+    // };
+
     const customBrandStyle = {
         fontSize: '40px',
       };
 
     const customLinkStyle = {
-        fontSize: '20px',
+        fontSize: '16px',
         paddingTop: 20,
+        textTransform: "uppercase",
     };
 
     return (
