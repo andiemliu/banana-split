@@ -11,6 +11,7 @@ import UserInputModal from './UserInputModal';
 
 const NavBarComponent = ({ page, onCardSave }) => {
     const [id, setId] = useState('6555a1f2bea95e6d64c85140'); 
+    const [isUploaded, setIsUploaded] = useState(false);
 
     const [showFirstModal, setShowFirstModal] = useState(false);
     const [showSecondModal, setShowSecondModal] = useState(false);
@@ -20,11 +21,13 @@ const NavBarComponent = ({ page, onCardSave }) => {
     const handleShowFirstModal = () => setShowFirstModal(true);
     const handleCloseFirstModal = () => setShowFirstModal(false);
 
-    const handleImageUpload = (imageId) => {
+    const handleImageUpload = (imageId, uploaded) => {
         setId(imageId);
+        setIsUploaded(uploaded);
     };
 
     const handleShowSecondModal = () => {
+        setIsUploaded(false);
         setShowFirstModal(false);
         setShowSecondModal(true);
     };
@@ -82,9 +85,10 @@ const NavBarComponent = ({ page, onCardSave }) => {
                                 <Button variant="secondary" onClick={handleCloseFirstModal}>
                                     Close
                                 </Button>
-                                <Button variant="primary" onClick={handleShowSecondModal}>
+                                {isUploaded && (
+                                    <Button variant="primary" onClick={handleShowSecondModal}>
                                     Next
-                                </Button>
+                                    </Button> )}                                
                                 </Modal.Footer>
                             </Modal>
 

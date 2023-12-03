@@ -64,7 +64,7 @@ const ImageUpload = ({ onImageUpload }) => {
             setStoredId(storedId);
 
             // Pass the image ID to the parent component NavbarComponent
-            onImageUpload(storedId);
+            onImageUpload(storedId, true);
         
             console.log('Data stored successfully with ID:', storedId);
           // Send API request to store imgUrl to MongoDB
