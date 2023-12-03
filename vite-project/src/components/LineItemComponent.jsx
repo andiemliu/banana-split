@@ -4,6 +4,7 @@ import './lineItemComponent.css';
 
 const LineItemComponent = ({ lineItem }) => {
     const { description, quantity, total } = lineItem;
+    const roundedQuantity = Math.round(quantity);
 
     return (
         // <div className="line-item">
@@ -13,7 +14,7 @@ const LineItemComponent = ({ lineItem }) => {
         // </div>
         <tr>
             <td>{description}</td>
-            <td>{quantity}</td>
+            <td>{roundedQuantity}</td>
             <td>${total}</td>
         </tr>
     );

@@ -97,6 +97,8 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
   // }  
   // console.log("checkedITems in receipt body", inputData);  
   console.log("receipt body !!! data", data);
+  const filteredData = data.line_items.filter(item => item.total > 0)
+
   // Render your component with the fetched data
   return (
     <div className='modalBody'>
@@ -120,7 +122,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
             </tr>
           </thead>
           <tbody>
-            {data.line_items.map((item, itemIndex) => (
+            {filteredData.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td>{item.description} (${item.total})</td>
                 {peopleNamesArr?.map((person, personIndex) => ( //inputData.peopleNamesArr

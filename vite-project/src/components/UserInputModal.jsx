@@ -6,6 +6,7 @@ import { FormControl, ListGroup } from 'react-bootstrap';
 import TableModal from './tableModal';
 import './userInputModal.css';
 import Table from 'react-bootstrap/Table';
+import PropTypes from 'prop-types';
 
 const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id, onCardSave }) => {
 
@@ -90,6 +91,10 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
         return;// <p>No data found</p>;
     }
 
+    const filteredData = data.line_items.filter(item => item.total > 0)
+    console.log("filter", filteredData)
+    console.log("regular", data)
+
 
     return (
         <>
@@ -116,7 +121,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.line_items.map((lineItem, index) => (
+                                    {filteredData?.map((lineItem, index) => (
                                     <LineItemComponent key={index} lineItem={lineItem} />
                                     ))}
                                 </tbody>
@@ -168,5 +173,9 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
         </>
         );
     };
+
+UserInputModal.propTypes = {
+    data: PropTypes.array
+}
 
 export default UserInputModal;
