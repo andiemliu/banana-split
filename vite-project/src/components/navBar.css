@@ -12,10 +12,14 @@
 } */
 
 .uploadReceiptButton {
-    margin-left: 400px;
     text-transform: uppercase;
 }
 
+@media (min-width: 1000px) {
+    .uploadReceiptButton {
+        margin-left: 500px;
+    }
+}
 .brand {
     margin-left: 60px;
 }

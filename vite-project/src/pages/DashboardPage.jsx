@@ -12,7 +12,7 @@ const DashboardPage = () => {
     //     content: `Content for Receipt ${index + 1}: will be user's names (eg Person1, Person2, Person3)`,
     //   }));
 
-      const { dashboardCards, handleCardSave, setDashboardCards } = useCardContext();
+      const { dashboardCards, handleCardSave } = useCardContext();
 
     //   const [dashboardCards, setDashboardCards] = useState([]);
 
@@ -27,7 +27,17 @@ const DashboardPage = () => {
         console.log('Dashboard data updated:', dashboardCards);
       }, [dashboardCards]);
 
+    //   useEffect(() => {
+ 
+    //     if (dashboardCards.length > 1) {
+    //       const updatedDashboardCards = dashboardCards.slice(0, -1);
+    //       setDashboardCards(updatedDashboardCards);
+    //     }
+    //   }, [dashboardCards, setDashboardCards]);
+
       const noFirstCardArr = dashboardCards.slice(1);
+
+    //   const noLastCard = dashboardCards.filter(card => card.people?.length !== 1);
     
     return (
         <div className="fullDashboardPage">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import './imageUpload.css';
 
 const ImageUpload = ({ onImageUpload }) => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -107,7 +108,7 @@ const ImageUpload = ({ onImageUpload }) => {
     {!isLoading && !isUploaded && (
       <div>
         <input type="file" onChange={handleFileSelect} />
-        <Button type="submit" disabled={isLoading || isUploaded}>
+        <Button type="submit" disabled={isLoading || isUploaded} className="uploadButton">
           {isLoading ? 'Uploading...' : 'Upload'}
         </Button>
       </div>

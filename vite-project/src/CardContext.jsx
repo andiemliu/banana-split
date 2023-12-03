@@ -16,6 +16,7 @@ export const CardProvider = ({ children }) => {
   const value = {
     dashboardCards,
     handleCardSave,
+    setDashboardCards
   };
 
   return <CardContext.Provider value={value}>{children}</CardContext.Provider>;
