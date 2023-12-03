@@ -7,16 +7,22 @@ import axios from 'axios';
 const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardSave }) => {
     // added
     // const [formData, setFormData] = useState();
-    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr });
+    // Create receipt?
+    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr, id: id });
     useEffect(() => {
         console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
         const fetchData = async () => {
             // Save checkedItems, peopleNamesArr to DB
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
-            const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
-            console.log("Save owed amts", owedAmounts);
             axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
+
+            try {
+                const owedAmounts = peopleNamesArr.map((person, personIndex) => calculateOwedAmount(personIndex));
+                console.log("Save owed amts", owedAmounts);    
+            } catch (error) {
+                console.log("owedAmounts not initialized yet", error);
+            }
             // Other actions you want to perform after the state update
             onCardSave(formData);
             onHideThird();
@@ -28,7 +34,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         // setFormData({ title: "Receipt" , people: peopleNamesArr });
         console.log("Before", formData)
         setFormData((prevData) => (
-            { ...prevData, title: "Receipt", people: peopleNamesArr }));
+            { ...prevData, title: "Receipt", people: peopleNamesArr, id: id }));
         console.log("after", formData);
         // onCardSave(formData);
         // onHideThird();
@@ -45,13 +51,15 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         try {
             // Make a request to your backend API with the provided ID
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-            console.log(response);
+            console.log("second get receipt", response);
             
             // Parse the JSON response
+            const data = response.data.data.data;
             const lineItems = response.data.data.data.line_items;
 
             // Update state with the fetched data
-            setData(lineItems);
+            setData(data);
+            // setData(lineItems);
         } catch (error) {
             // Handle errors
             setError(error.message);
@@ -81,7 +89,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         setCheckAll(newCheckAllState);
     
         const newCheckedItems = {};
-        data.forEach((item, itemIndex) => {
+        data.line_items.forEach((item, itemIndex) => {
             peopleNamesArr.forEach((person, personIndex) => {
                 newCheckedItems[`${personIndex}-${itemIndex}`] = newCheckAllState;
             });        
@@ -100,7 +108,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
 
     const calculateOwedAmount = (personIndex) => {
          
-        return data.reduce((total, item, itemIndex) => {
+        return data.line_items.reduce((total, item, itemIndex) => {
         const key = `${personIndex}-${itemIndex}`;
         const isChecked = checkedItems[key];
     
@@ -121,7 +129,8 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
         //console.log("calcOwedAmt", result);
         //return result;
     };
-
+    console.log("hi my id ", id);
+    console.log("hi my data", data);
     return (
         <Modal show={showThird} onHide={onHideThird} size="lg">
             <Modal.Header>

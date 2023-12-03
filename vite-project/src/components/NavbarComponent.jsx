@@ -65,7 +65,7 @@ const NavBarComponent = ({ page, onCardSave }) => {
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/dashboard" style={customLinkStyle} className="navBarLink">Dashboard</Nav.Link>
-                        <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link>
+                        {/* <Nav.Link as={Link} to="/profiles" style={customLinkStyle}>Profiles</Nav.Link> */}
                         {(page == 1) ? 
                             (<>
                             <Button className="uploadReceiptButton" variant="outline-primary" onClick={handleShowFirstModal} >Upload a Receipt</Button>

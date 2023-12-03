@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './receiptBody.css';
 
-const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handleCheckboxChange, calculateOwedAmount, checkedItems, data }) => {
+const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handleCheckboxChange, calculateOwedAmount, data, checkedItems }) => {
   //  const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
   //  const [loading, setLoading] = useState(true);
   //  const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
   //        const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);        
 
   //       // Parse the JSON response
-  //       console.log(response.data.data.inputData);
+  //       console.log("RESP",response);
   //       const checkedItems = response.data.data.inputData.checkboxes;
   //       const peopleNamesArr = response.data.data.inputData.people;
 
@@ -37,6 +37,53 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
   //   fetchData();
   // }, [id]); // Only re-run the effect if the 'id' prop changes
 
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [checkedItems, setCheckedItems] = useState({});
+
+  // useEffect(() => {
+  //     let isMounted = true;
+
+  //     const fetchData = async () => {
+
+  //     try {
+  //         await new Promise(resolve => setTimeout(resolve, 500));
+  //         // Make a request to your backend API with the provided ID
+  //         const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
+  //         console.log(response);
+          
+  //         // Parse the JSON response
+  //         const lineItems = response.data.data.data.line_items;
+  //         // const checkedItems = response.data.data.inputData.checkboxes;
+  //         // console.log("checkeditems in receipt body:", checkedItems);
+  //         if (isMounted) {
+  //             // Update state with the fetched data
+  //             setData(lineItems);
+  //             // setCheckedItems(checkedItems);
+  //         }
+  //     } catch (error) {
+  //         // Handle errors
+  //         if (isMounted) {
+
+  //             setError(error.message);
+  //             setLoading(false);
+
+  //         }
+  //     } finally {
+  //         // Update loading state regardless of success or failure
+  //         setLoading(false);
+  //     }
+  //     };
+
+  //     // Call the fetchData function when the component mounts
+  //     fetchData();
+  //     return () => {
+  //         isMounted = false;
+  //       };
+  // }, [id]); // Only re-run the effect if the 'id' prop changes
+
+
   // if (loading) {
   //   return <p>Loading...</p>;
   // }
@@ -48,15 +95,21 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
   // if (!data) {
   //   return <p>No data found</p>;
   // }  
-  console.log("checkedITems in receipt body", checkedItems);  
-
+  // console.log("checkedITems in receipt body", inputData);  
+  console.log("receipt body !!! data", data);
   // Render your component with the fetched data
   return (
     <div className='modalBody'>
       {/* {data.map((lineItem, index) => (
         <LineItemComponent key={index} lineItem={lineItem} />
       ))} */}
+      
       <div className='receiptTable'>
+        <div className='receiptHeader'>
+          <p>${data.total} spent at {data.vendor.name} </p>
+          <p>Date: {data.date}</p>
+          <p className='add-margin'>Location: {data.vendor.address}</p>
+        </div>
         <Table hover>
           <thead>
             <tr>
@@ -67,7 +120,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
             </tr>
           </thead>
           <tbody>
-            {data.map((item, itemIndex) => (
+            {data.line_items.map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td>{item.description} (${item.total})</td>
                 {peopleNamesArr?.map((person, personIndex) => ( //inputData.peopleNamesArr
@@ -152,7 +205,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
 ReceiptBody.propTypes = {
   id: PropTypes.string,
   peopleNamesArr: PropTypes.array,
-  data: PropTypes.array
+  data: PropTypes.object
 };
 
 export default ReceiptBody;

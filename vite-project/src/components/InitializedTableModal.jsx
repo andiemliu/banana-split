@@ -78,12 +78,14 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
             console.log(response);
             
             // Parse the JSON response
+            const data = response.data.data.data;
             const lineItems = response.data.data.data.line_items;
             const checkedItems = response.data.data.inputData.checkboxes;
             console.log("checkeditems in Initializedtablemodal:", checkedItems);
             if (isMounted) {
                 // Update state with the fetched data
-                setData(lineItems);
+                // setData(lineItems);
+                setData(data);
                 setCheckedItems(checkedItems);
             }
         } catch (error) {
@@ -108,7 +110,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
     }, [id]); // Only re-run the effect if the 'id' prop changes
 
     if (loading) {
-        return <p>Loading...</p>;
+        return // <p>Loading...</p>;
     }
 
     if (error) {
@@ -130,7 +132,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
 
     const calculateOwedAmount = (personIndex) => {
          
-        return data.reduce((total, item, itemIndex) => {
+        return data.line_items.reduce((total, item, itemIndex) => {
         const key = `${personIndex}-${itemIndex}`;
         const isChecked = checkedItems[key];
     
@@ -152,6 +154,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         //return result;
     };
     console.log("checkedItems before pass to receiptbody", checkedItems);
+    console.log("Data before pass to receiptbody", data);
 
     return (
         <Modal show={showThird} onHide={onHideThird} size="lg">
