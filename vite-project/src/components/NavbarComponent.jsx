@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import UserInputModal from './UserInputModal';
 
 const NavBarComponent = ({ page, onCardSave }) => {
-    const [id, setId] = useState('6555a1f2bea95e6d64c85140'); 
+    const [id, setId] = useState(null); 
     const [isUploaded, setIsUploaded] = useState(false);
 
     const [showFirstModal, setShowFirstModal] = useState(false);

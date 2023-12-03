@@ -8,7 +8,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
     // added
     // const [formData, setFormData] = useState();
     // Create receipt?
-    const [formData, setFormData] = useState({ title: "Receipt", people: peopleNamesArr, id: id });
+    const [formData, setFormData] = useState({});// title: "Receipt", people: peopleNamesArr, id: id });
     useEffect(() => {
         console.log("After (inside useEffect)", formData, checkedItems, peopleNamesArr);
         const fetchData = async () => {

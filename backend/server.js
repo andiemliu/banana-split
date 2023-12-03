@@ -90,11 +90,11 @@ app.post('/api/itemizeReceipt', async (req, res) => {
     
         // Create a new instance of the Receipt model
         const receipt = new Receipt({ imgUrl, data });
-        console.log(receipt);
+        // console.log(receipt);
     
         // Save the image to the database
         const result = await col.insertOne(receipt);
-        console.log(result);
+        // console.log(result);
         const insertedId = result.insertedId; // Store the ID for future use
         console.log('Receipt saved to the database. ID:', insertedId);
     
@@ -117,13 +117,13 @@ app.post('/api/itemizeReceipt', async (req, res) => {
 });
 
 app.get('/api/getReceipt/:id', async (req, res) => {
-  console.log("getReceipt");
+  console.log("getReceipt", req.params);
+  if (req.params.id == 'null') {
+    return;// res.status(400).json({ error: 'Missing ID parameter' });
+  }
   try {
-    console.log('Try to connect to server');
-
     // Connect the client to the server
     await client.connect();
-    console.log('Connected successfully to server');
     // Specify a database to access
     const db = client.db(dbName);
     // Reference a particular collection
@@ -154,7 +154,7 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const { checkedItems, peopleNamesArr } = req.body;
-    console.log("storeSplitInput", id, checkedItems, peopleNamesArr);
+    // console.log("storeSplitInput", id, checkedItems, peopleNamesArr);
 
     // Connect the client to the server
     await client.connect();
@@ -179,7 +179,7 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
     // Replace existing data with new values
     doc.inputData.people = peopleNamesArr;
     doc.inputData.checkboxes = checkedItems;
-    console.log("inpdata", doc.inputData);
+    // console.log("inpdata", doc.inputData);
     // Save the updated document
     const result = await col.replaceOne({ _id: objectId }, doc);
   } catch (error) {

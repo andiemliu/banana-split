@@ -45,9 +45,14 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!id || id == "null") {
+                console.log("hi im null");
+                setLoading(false);
+                return;
+            }
             try {
                 // Make a request to your backend API with the provided ID
-                console.log(id)
+                console.log("userinputmodal id is", id);
                 const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
                 console.log(response);
                 
@@ -82,7 +87,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
     }
 
     if (!data) {
-        return <p>No data found</p>;
+        return;// <p>No data found</p>;
     }
 
 
