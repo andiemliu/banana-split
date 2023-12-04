@@ -72,7 +72,8 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         const fetchData = async () => {
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // TODO: CHECK IF THIS IS CAUSING THE LAST CHECKBOX CHANGE TO NOT BE SAVED!
+            await new Promise(resolve => setTimeout(resolve, 1000));
             // Make a request to your backend API with the provided ID
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
@@ -123,12 +124,24 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
 
 
     const handleCheckboxChange = (personIndex, itemIndex) => {
-        setCheckedItems((prevCheckedItems) => {
+        setCheckedItems(  (prevCheckedItems) => {
+
         const key = `${personIndex}-${itemIndex}`;
         console.log(checkedItems);
-        return { ...prevCheckedItems, [key]: !prevCheckedItems[key] };
+        const newCheckedItems = { ...prevCheckedItems, [key]: !prevCheckedItems[key] } || checkedItems;
+        console.log("storing updates checkboxes frm inittable", newCheckedItems);
+        setCheckedItems(newCheckedItems);
+        console.log("checkedItems after setCheckedItems", checkedItems);
+        sendCheckboxesBackend();
+        return newCheckedItems;
         });
+
     };
+
+    const sendCheckboxesBackend = () => {
+        axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr })
+
+    }
 
     const calculateOwedAmount = (personIndex) => {
          
