@@ -1,100 +1,107 @@
-import { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import axios from 'axios';
-import LineItemComponent from './LineItemComponent'; 
-import { FormControl, ListGroup } from 'react-bootstrap';
-import TableModal from './tableModal';
-import './userInputModal.css';
-import Table from 'react-bootstrap/Table';
-import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react'
+import { Modal, Button } from 'react-bootstrap'
+import axios from 'axios'
+import LineItemComponent from './LineItemComponent'
+import { FormControl, ListGroup } from 'react-bootstrap'
+import TableModal from './tableModal'
+import './userInputModal.css'
+import Table from 'react-bootstrap/Table'
+import PropTypes from 'prop-types'
 
-const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, handleShowThirdModal, id, onCardSave }) => {
+const UserInputModal = ({
+    showSecond,
+    onHideSecond,
+    showThird,
+    onHideThird,
+    handleShowThirdModal,
+    id,
+    onCardSave,
+}) => {
+    const [data, setData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    const [inputText, setInputText] = useState('');
-    const [payerName, setPayerName] = useState('');
-    const [peopleNames, setPeopleNames] = useState([]);
+    const [inputText, setInputText] = useState('')
+    const [payerName, setPayerName] = useState('')
+    const [peopleNames, setPeopleNames] = useState([])
 
     const handlePayerInputChange = (event) => {
-        setPayerName(event.target.value);
-    };
+        setPayerName(event.target.value)
+    }
 
     const handlePayerEnterPress = (event) => {
         if (event.key === 'Enter' && inputText.trim() !== '') {
-        setPayerName(payerName);
-        setInputText(''); // Clear the input after pressing Enter
+            setPayerName(payerName)
+            setInputText('') // Clear the input after pressing Enter
         }
-    };
+    }
 
     const handleInputChange = (event) => {
-        setInputText(event.target.value);
-    };
+        setInputText(event.target.value)
+    }
 
     const handleEnterPress = (event) => {
         if (event.key === 'Enter' && inputText.trim() !== '') {
-        setPeopleNames((prevPeople) => [...prevPeople, inputText]);
-        setInputText(''); // Clear the input after pressing Enter
+            setPeopleNames((prevPeople) => [...prevPeople, inputText])
+            setInputText('') // Clear the input after pressing Enter
         }
-    };
+    }
 
     const handleDelete = (index) => {
-        setPeopleNames((prevPeople) => prevPeople.filter((_, i) => i !== index));
-      };
+        setPeopleNames((prevPeople) => prevPeople.filter((_, i) => i !== index))
+    }
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!id || id == "null" || id == "undefined") {
-                console.log("hi im null");
-                setLoading(false);
-                return;
+            if (!id || id == 'null' || id == 'undefined') {
+                console.log('hi im null')
+                setLoading(false)
+                return
             }
             try {
                 // Make a request to your backend API with the provided ID
-                console.log("userinputmodal id is", id);
-                const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
-                console.log(response);
-                
+                console.log('userinputmodal id is', id)
+                const response = await axios.get(
+                    `http://localhost:3001/api/getReceipt/${id}`
+                )
+                console.log(response)
 
                 // Parse the JSON response
-                console.log(response);
-                const data = response.data.data.data;
-                const lineItems = response.data.data.data.line_items;
+                console.log(response)
+                const data = response.data.data.data
+                const lineItems = response.data.data.data.line_items
 
                 // Update state with the fetched data
-                setData(data);
+                setData(data)
                 // setData(lineItems);
             } catch (error) {
                 // Handle errors
-                setError(error.message);
+                setError(error.message)
             } finally {
                 // Update loading state regardless of success or failure
-                setLoading(false);
+                setLoading(false)
             }
-        };
+        }
 
         // Call the fetchData function when the component mounts
-        fetchData();
-    }, [id]); // Only re-run the effect if the 'id' prop changes
+        fetchData()
+    }, [id]) // Only re-run the effect if the 'id' prop changes
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>Loading...</p>
     }
 
     if (error) {
-        return <p>Error: {error}</p>;
+        return <p>Error: {error}</p>
     }
 
     if (!data) {
-        return;// <p>No data found</p>;
+        return // <p>No data found</p>;
     }
 
-    const filteredData = data.line_items.filter(item => item.total > 0)
-    console.log("filter", filteredData)
-    console.log("regular", data)
-
+    const filteredData = data.line_items.filter((item) => item.total > 0)
+    console.log('filter', filteredData)
+    console.log('regular', data)
 
     return (
         <>
@@ -102,32 +109,34 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                 <Modal.Header closeButton>
                     <Modal.Title>2. Enter Names</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
-                    <div className='receiptNamesSeparator'>
-                        <div className='receiptItems'>
+                <Modal.Body
+                    style={{
+                        maxHeight: 'calc(100vh - 200px)',
+                        overflowY: 'auto',
+                    }}
+                >
+                    <div className="receiptNamesSeparator">
+                        <div className="receiptItems">
                             <h3>Receipt Items</h3>
-
-                            {/* {data.map((lineItem, index) => (
-                                <div key={index} className='itemBlock'>
-                                    <LineItemComponent key={index} lineItem={lineItem} />
-                                </div>
-                            ))} */}
                             <Table striped bordered hover>
                                 <thead>
                                     <tr>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
+                                        <th>Description</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {filteredData?.map((lineItem, index) => (
-                                    <LineItemComponent key={index} lineItem={lineItem} />
+                                        <LineItemComponent
+                                            key={index}
+                                            lineItem={lineItem}
+                                        />
                                     ))}
                                 </tbody>
                             </Table>
                         </div>
-                        <div className='inputSection'>
+                        <div className="inputSection">
                             <h3>Payer</h3>
                             <FormControl
                                 type="text"
@@ -148,34 +157,61 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
                             />
                             <ListGroup>
                                 {peopleNames.map((person, index) => (
-                                <ListGroup.Item key={index} className="nameList" style={{
-                                    outline: 'none',
-                                    border: 'none',
-                                    backgroundColor: 'transparent',
-                                    position: 'relative',
-                                  }}>
-                                    <Button variant="outline-danger" size="sm" onClick={() => handleDelete(index)} className="deleteButton">Delete</Button>
-                                    {person}
-                                </ListGroup.Item>
+                                    <ListGroup.Item
+                                        key={index}
+                                        className="nameList"
+                                        style={{
+                                            outline: 'none',
+                                            border: 'none',
+                                            backgroundColor: 'transparent',
+                                            position: 'relative',
+                                        }}
+                                    >
+                                        <Button
+                                            variant="outline-danger"
+                                            size="sm"
+                                            onClick={() => handleDelete(index)}
+                                            className="deleteButton"
+                                        >
+                                            Delete
+                                        </Button>
+                                        {person}
+                                    </ListGroup.Item>
                                 ))}
                             </ListGroup>
                         </div>
                     </div>
                 </Modal.Body>
-                <Modal.Footer style={{ position: 'sticky', bottom: 0, background: 'white' }}>
-                    <Button variant="secondary" onClick={onHideSecond}>Close</Button>
-                    <Button variant="primary" onClick={handleShowThirdModal}>Next</Button>
-                    {/* <Button variant="primary" onClick={handleShowThirdModal}>Create Card</Button> */}
+                <Modal.Footer
+                    style={{
+                        position: 'sticky',
+                        bottom: 0,
+                        background: 'white',
+                    }}
+                >
+                    <Button variant="secondary" onClick={onHideSecond}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleShowThirdModal}>
+                        Next
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
-            <TableModal title={"3. Assign Amounts For Each Person"} showThird={showThird} onHideThird={onHideThird} id={id} peopleNamesArr={[...peopleNames, payerName + " (Payer)"]} onCardSave={onCardSave} ></TableModal>
+            <TableModal
+                title={'3. Assign Amounts For Each Person'}
+                showThird={showThird}
+                onHideThird={onHideThird}
+                id={id}
+                peopleNamesArr={[...peopleNames, payerName + ' (Payer)']}
+                onCardSave={onCardSave}
+            ></TableModal>
         </>
-        );
-    };
-
-UserInputModal.propTypes = {
-    data: PropTypes.array
+    )
 }
 
-export default UserInputModal;
+UserInputModal.propTypes = {
+    data: PropTypes.array,
+}
+
+export default UserInputModal

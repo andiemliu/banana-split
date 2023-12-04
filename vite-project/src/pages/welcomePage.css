@@ -1,3 +1,16 @@
+.firstDiv p:first-child {
+    font-weight: bold;
+}
+
+.thirdDiv p {
+    text-align: right;
+}
+
+.firstDiv p {
+    text-align: left;
+    max-width: 70%;
+}
+
 .welcomeMessage {
     display: flex;
     flex-direction: column;
@@ -9,12 +22,15 @@
 }
 
 .firstDiv {
+    margin-top: 90px;
     font-size: 17px;
+    font-weight: 500;
 }
 
 .secondDiv {
     margin-top: 7px;
     font-size: 17px;
+    font-weight: 500;
 }
 
 .thirdDiv {
@@ -23,8 +39,10 @@
 
 .fullWelcomePage {
     background-image: url('../assets/bananaSplitBackgroundHigher.png');
-    background-size: cover;
+    /* background-size: cover; */
+    background-position: right 60% top 30%;
+    background-size: 170%;
     min-width: 1200px;
     min-height: 100vh;
-    opacity: 0.85;
+    opacity: 0.8;
 }
