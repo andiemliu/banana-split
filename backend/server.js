@@ -188,6 +188,81 @@ app.put('/api/storeSplitInput/:id', async (req, res) => {
   }
 });
 
+app.put('/api/updateOwedAmount', async (req, res) => {
+  try {
+    const { id, username, person, collector, amount } = req.body;
+    console.log("updateOwedAmount",  person, collector, amount );
+    if (!id || id == "null" || !username || !person || !collector || isNaN(amount)) {
+      return res.status(400).json({ error: 'Missing required fields to update owed amount' });
+    }
+    // Connect the client to the server
+    await client.connect();
+    // Specify a database to access
+    const db = client.db(dbName);
+    // Reference a particular collection
+    const col = db.collection('people');
+    const objectId = new ObjectId(id);
+    // Find the document by ID
+    const existingDoc = await col.findOne({ _id: objectId });
+    // Update the document
+    if (!existingDoc) {
+      await col.insertOne({
+        user: {
+          username: username,
+          amounts: [{ person, collector, amount: parseFloat(amount) }],
+      }});
+    } else {
+      // If the document exists, update the amounts array
+      const currUser = existingDoc.user;
+      const amounts = currUser.amounts || [];
+      const existingPairIndex = amounts.findIndex(item => item.person === person && item.collector === collector);
+
+      if (existingPairIndex !== -1) {
+        // If the pair already exists, update the amount
+        amounts[existingPairIndex].amount += parseFloat(amount) ;
+      } else {
+        // If the pair doesn't exist, add a new entry
+        amounts.push({ person, collector, amount: parseFloat(amount)  });
+      }
+
+      // Update the document with the new amounts array
+      currUser.amounts = amounts;
+      existingDoc.username = currUser;
+      const result = await col.replaceOne({ _id: objectId }, existingDoc);
+      // await col.updateOne({ userID }, { $set: { amounts } });
+    }
+    res.status(201).json({ message: 'Owed amount updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error update owed amount' });
+  }
+}
+);
+
+app.get('/api/getOwedAmounts/:id/:username', async (req, res) => {
+  try {
+    const { id, username } = req.params;
+    console.log("getOwedAmount", id);
+    // Connect the client to the server
+    await client.connect();
+    // Specify a database to access
+    const db = client.db(dbName);
+    // Reference a particular collection
+    const col = db.collection('people');
+    const objectId = new ObjectId(id);
+    // Find the document by ID
+    const doc = await col.findOne({ _id: objectId });
+    // Update the document
+    if (!doc) {
+      return res.status(404).json({ error: 'Owed amount not found' });
+    }
+    res.json({ data: doc });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error get owed amount' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
