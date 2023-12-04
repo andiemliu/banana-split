@@ -1,9 +1,11 @@
 .fullProfilesPage {
     background-image: url('../assets/pinkRedBackground.png');
     background-size: cover;
-    background-position: center;
+    min-width: 1280px;
+    min-height: 100vh;
+    /* background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 100vh; */
 }
 
 .separate1 {
