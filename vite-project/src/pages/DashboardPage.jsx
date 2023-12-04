@@ -33,7 +33,7 @@ const DashboardPage = () => {
                                 <ReceiptComponent
                                     id={card.id}
                                     initialized={true}
-                                    title={card.title + ' ' + index.toString()}
+                                    title={card.title} //+ ' ' + index.toString()}
                                     peopleNamesArr={card.people}
                                 ></ReceiptComponent>
                             )}
