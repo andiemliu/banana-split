@@ -26,7 +26,10 @@ const ReceiptComponent = ({initialized, id, title, peopleNamesArr}) => {
   //   });
   // };
   // const [fullscreen, setFullscreen] = useState(true);
-
+  // if peopleNamesArr not initialized, set to empty array
+  if (!peopleNamesArr) {
+    peopleNamesArr = ['Bro'];
+  }
   const peopleNamesString = peopleNamesArr.join(', ');
 
 

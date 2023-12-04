@@ -149,7 +149,7 @@ const TableModal = ({ title, showThird, onHideThird, id, peopleNamesArr, onCardS
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ReceiptBody checkAll={checkAll} handleCheckAllChange={handleCheckAllChange} id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
+                <ReceiptBody editable={true} checkAll={checkAll} handleCheckAllChange={handleCheckAllChange} id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
             </Modal.Body>
             <div style={{paddingLeft: 650, paddingBottom: 20}}>
             <label> 

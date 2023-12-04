@@ -72,7 +72,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         const fetchData = async () => {
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // await new Promise(resolve => setTimeout(resolve, 500));
             // Make a request to your backend API with the provided ID
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
@@ -128,7 +128,13 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         console.log(checkedItems);
         return { ...prevCheckedItems, [key]: !prevCheckedItems[key] };
         });
+        sendDataToBackend();
     };
+
+    const sendDataToBackend = async () => {
+        // Save checkedItems, peopleNamesArr to DB
+        const response = await axios.put(`http://localhost:3001/api/storeSplitInput/${id}`, { checkedItems, peopleNamesArr });
+    }
 
     const calculateOwedAmount = (personIndex) => {
          
@@ -162,7 +168,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <ReceiptBody id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
+                <ReceiptBody editable={false} id={id} peopleNamesArr={peopleNamesArr} handleCheckboxChange={handleCheckboxChange} calculateOwedAmount={calculateOwedAmount} checkedItems={checkedItems} data={data}></ReceiptBody>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={onHideThird}>Close</Button>

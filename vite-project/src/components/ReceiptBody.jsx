@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './receiptBody.css';
 
-const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handleCheckboxChange, calculateOwedAmount, data, checkedItems }) => {
+const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handleCheckboxChange, calculateOwedAmount, data, checkedItems, editable }) => {
   //  const [inputData, setInputData] = useState({ checkedItems: {}, peopleNamesArr: []});
   //  const [loading, setLoading] = useState(true);
   //  const [error, setError] = useState(null);
@@ -131,6 +131,7 @@ const ReceiptBody = ({ id, peopleNamesArr, checkAll, handleCheckAllChange, handl
                       type="checkbox"
                       checked={checkedItems[`${personIndex}-${itemIndex}`] || false}
                       onChange={() => handleCheckboxChange(personIndex, itemIndex)}
+                      disabled={!editable}
                     />
                   </td>
                 ))}
