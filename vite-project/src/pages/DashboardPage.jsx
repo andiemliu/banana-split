@@ -52,8 +52,9 @@ const DashboardPage = () => {
                 {dashboardCards?.length > 1 ? (
                     noFirstCardArr?.map((card, index) => (
                         <div key={index} className="individualReceipts">
-                            <ReceiptComponent id={card.id} initialized={true} title={card.title + " " + (index + 1).toString()} peopleNamesArr={card.people}></ReceiptComponent>
-                        </div>
+                             {/* Only render card if id is valid (gets rid of dummy cards after context switching) */}
+                            {card.id != undefined && <ReceiptComponent id={card.id} initialized={true} title={card.title + " " + (index + 1).toString()} peopleNamesArr={card.people}></ReceiptComponent> }
+                            </div>
                         ))
                 ) : (
                     <div className="individualReceipts">

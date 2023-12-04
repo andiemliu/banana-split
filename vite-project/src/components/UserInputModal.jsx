@@ -46,7 +46,7 @@ const UserInputModal = ({ showSecond, onHideSecond, showThird, onHideThird, hand
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!id || id == "null") {
+            if (!id || id == "null" || id == "undefined") {
                 console.log("hi im null");
                 setLoading(false);
                 return;

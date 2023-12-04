@@ -70,10 +70,13 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
         let isMounted = true;
 
         const fetchData = async () => {
+        if (id && id != "undefined"){
 
+        
         try {
             // await new Promise(resolve => setTimeout(resolve, 500));
             // Make a request to your backend API with the provided ID
+            console.log("SEND init table modal id", id)
             const response = await axios.get(`http://localhost:3001/api/getReceipt/${id}`);
             console.log(response);
             
@@ -100,6 +103,7 @@ const InitializedTableModal = ({ title, showThird, onHideThird, id, peopleNamesA
             // Update loading state regardless of success or failure
             setLoading(false);
         }
+    }
         };
 
         // Call the fetchData function when the component mounts
